@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Networking Fundamentals for Cybersecurity: Know the Battlefield – Cyberstack Blog</title>
+  <title>Intro to Cybersecurity: CIA, GRC, Security Models &amp; Certifications – Cyberstack Blog</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code:wght@400;500;700&family=Montserrat:wght@700&display=optional" rel="stylesheet">
@@ -22,38 +22,81 @@
 
   <article class="post-article">
     <section class="post-header">
-      <h1>Networking Fundamentals for Cybersecurity: Know the Battlefield</h1>
-      <p class="post-meta">By Oriana • Mar 20 2026 • 7 min read •
-        <a href="../index.html?filter=networking">#networking</a>
-        <a href="../index.html?filter=cloud">#cloud</a>
+      <h1>Intro to Cybersecurity: CIA, GRC, Security Models &amp; Certifications</h1>
+      <p class="post-meta">By Oriana • Mar 10 2026 • 6 min read •
+        <a href="../index.html?filter=security">#security</a>
+        <a href="../index.html?filter=journey">#journey</a>
+        <a href="../index.html?filter=redi">#ReDI</a>
       </p>
     </section>
 
+    <section class="post-hero">
+      <img src="../../images/security.png" alt="Cybersecurity concepts">
+    </section>
+
     <section class="post-content">
-      <p>Every attack travels across a network. Malware exfiltrates data over TCP. Command-and-control servers communicate via DNS. Man-in-the-middle attacks exploit gaps in TLS. If you want to understand cybersecurity — whether you are doing penetration testing, threat modelling, or building a secure system — you first need a solid mental model of how data actually moves from machine to machine. This post covers the core networking concepts that underpin most of the attacks and defences you will encounter.</p>
+      <p>When I first started exploring cybersecurity, I quickly realised it is not just about hacking or firewalls. It is a whole discipline built on frameworks, principles, and formal models that define how we think about protecting information. This post captures the core concepts I encountered early on — the ones that gave me the mental scaffolding to understand everything else.</p>
 
-      <h2>The OSI Model in Practice</h2>
-      <p>The OSI model is seven layers of abstraction that describe how a packet of data travels from an application on one machine to an application on another. As a developer, you primarily operate at Layer 7 (Application — HTTP, WebSockets, DNS), Layer 4 (Transport — TCP, UDP), and occasionally Layer 3 (Network — IP addressing and routing). Understanding which layer a problem lives at saves significant debugging time.</p>
+      <h2>Security Threats — What Are We Actually Protecting Against?</h2>
+      <p>Before you can defend anything, you need to understand the threat landscape. Threats come in many forms: malware, ransomware, insider threats, social engineering, zero-days, DDoS attacks, and supply chain compromises. What they all have in common is that they target one or more of three fundamental properties of information — and that is where the CIA Triad comes in.</p>
 
-      <p>When your HTTP request times out, is the problem a dead server (Layer 7), a broken TCP handshake (Layer 4), or an unreachable IP (Layer 3)? Each diagnosis requires different tools: <code>curl</code> for Layer 7, <code>telnet</code> or <code>nc</code> for Layer 4, <code>ping</code> and <code>traceroute</code> for Layer 3.</p>
+      <h2>The CIA Triad</h2>
+      <p>The CIA Triad is the foundation of information security. Every control, policy, and design decision ultimately maps back to one of its three pillars:</p>
+      <ul>
+        <li><strong>Confidentiality</strong> — only authorised parties can access the information. Encryption, access controls, and need-to-know policies protect confidentiality.</li>
+        <li><strong>Integrity</strong> — information is accurate and has not been tampered with. Hashing, digital signatures, and change controls protect integrity.</li>
+        <li><strong>Availability</strong> — information and systems are accessible when needed. Redundancy, backups, and DDoS protection preserve availability.</li>
+      </ul>
+      <p>A ransomware attack, for example, destroys all three: it encrypts data (confidentiality breach), corrupts or destroys it (integrity), and makes systems unusable (availability). Understanding which pillar an attack targets helps you choose the right countermeasure.</p>
 
-      <h2>TCP vs UDP: Choosing Correctly</h2>
-      <p>TCP guarantees delivery and ordering at the cost of overhead — the three-way handshake, acknowledgements, retransmission. It is the right choice for anything where losing data is unacceptable: HTTP, database connections, file transfers. UDP skips all of that and just fires packets. It is right for latency-sensitive streams where a dropped packet is preferable to a delayed one: video calls, online games, DNS lookups.</p>
+      <h2>GRC — Governance, Risk, and Compliance</h2>
+      <p>GRC is the organisational side of cybersecurity. It ties together the policies, processes, and standards that keep a business legally compliant and strategically protected.</p>
+      <ul>
+        <li><strong>Governance</strong> — who is responsible for security decisions? Policies, roles, and accountability structures.</li>
+        <li><strong>Risk Management</strong> — identifying, assessing, and prioritising threats. Risk = Likelihood × Impact. Controls are chosen to reduce risk to an acceptable level.</li>
+        <li><strong>Compliance</strong> — meeting legal and regulatory requirements. GDPR, ISO 27001, NIST, PCI-DSS are all compliance frameworks that organisations must align with.</li>
+      </ul>
+      <p>GRC might sound dry compared to hands-on hacking, but it is where security strategy lives. A vulnerability found in a pentest only gets fixed if the governance structure supports it.</p>
 
-      <pre><code># Quick check: is a remote TCP port open?
-nc -zv example.com 443
-# Connection to example.com port 443 [tcp/https] succeeded!</code></pre>
+      <h2>Certifications — Mapping the Landscape</h2>
+      <p>Cybersecurity has a rich certification ecosystem. Early on, understanding which cert fits which career path matters:</p>
+      <ul>
+        <li><strong>CompTIA Security+</strong> — entry-level, vendor neutral, covers core security concepts including CIA, threats, and GRC basics.</li>
+        <li><strong>CEH (Certified Ethical Hacker)</strong> — focused on offensive techniques, great for aspiring pentesters.</li>
+        <li><strong>CISSP</strong> — senior-level, management and architecture focused, covers security models in depth.</li>
+        <li><strong>OSCP (Offensive Security Certified Professional)</strong> — highly practical, the gold standard for penetration testers.</li>
+        <li><strong>ISO 27001 Lead Auditor / Implementer</strong> — for those leaning toward GRC and compliance roles.</li>
+      </ul>
 
-      <h2>DNS Matters More Than You Think</h2>
-      <p>DNS converts human-readable hostnames into IP addresses. It is cached aggressively at every layer — OS, browser, resolver — which means a misconfigured TTL can haunt you for hours after a deployment fix. Know your TTLs: set them low (60–300 s) several days before a migration, make the change, then raise them again. And always query the authoritative nameserver directly when debugging, not your local cache.</p>
+      <h2>Security Models — Biba, Bell-LaPadula, and Clark-Wilson</h2>
+      <p>Security models are formal frameworks that define rules for how information can flow within a system. They were developed to give rigorous, provable guarantees — especially for government and military systems. Understanding them reveals the theoretical roots of access control.</p>
 
-      <h2>HTTPS, TLS, and What a Certificate Actually Does</h2>
-      <p>TLS (often still called SSL) provides two things: encryption of data in transit and authentication that you are talking to who you think you are. Authentication is done via certificates signed by a trusted Certificate Authority. When a browser says "Not Secure", it means one of those two guarantees is missing or untrusted. For development, use tools like <code>mkcert</code> to issue locally-trusted certificates rather than disabling TLS entirely — skipping TLS locally trains you towards bad habits and masks real issues.</p>
+      <h3>Bell-LaPadula — Protecting Confidentiality</h3>
+      <p>Developed for the US military, Bell-LaPadula focuses entirely on <strong>confidentiality</strong>. Its two core rules are:</p>
+      <ul>
+        <li><strong>No Read Up (Simple Security Property)</strong> — a subject cannot read data at a higher classification level than their clearance.</li>
+        <li><strong>No Write Down (Star Property)</strong> — a subject cannot write data to a lower classification level, preventing leakage of secrets downward.</li>
+      </ul>
+      <p>Think of it as: <em>you can read what you're cleared for, you can write upward, but secrets never flow down.</em></p>
 
-      <h2>Network Security Controls — How They Map to the OSI Model</h2>
-      <p>Security controls exist at every layer. Firewalls operate at Layer 3 and 4, filtering by IP address and port. Web Application Firewalls (WAFs) operate at Layer 7, inspecting HTTP payloads for attack patterns. Intrusion Detection Systems (IDS) and Intrusion Prevention Systems (IPS) sit inline and analyse traffic across multiple layers simultaneously. Knowing which layer a control operates at tells you what it can and cannot see — and therefore what attackers can hide from it. A packet-filtering firewall blocking port 443 stops nothing if the attacker tunnels their C2 traffic inside HTTPS on that same port.</p>
+      <h3>Biba — Protecting Integrity</h3>
+      <p>Biba is the integrity-focused mirror image of Bell-LaPadula. Its rules are:</p>
+      <ul>
+        <li><strong>No Write Up</strong> — a subject cannot write to a higher integrity level (preventing low-quality data corrupting trusted data).</li>
+        <li><strong>No Read Down</strong> — a subject cannot read from a lower integrity level (preventing contamination by untrusted data).</li>
+      </ul>
+      <p>Biba is relevant anywhere data quality matters — financial systems, healthcare records, audit logs.</p>
 
-      <p>In cloud environments, Virtual Private Clouds (VPCs) are Layer 3 subnets, Security Groups are stateful host-level firewalls, and network ACLs are stateless packet filters. Understanding this layering helps you reason about east-west movement inside a compromised cloud environment — which is exactly what a threat actor does after initial access.</p>
+      <h3>Clark-Wilson — Commercial Integrity</h3>
+      <p>Clark-Wilson was designed for commercial environments where Biba's strict lattice model is impractical. It centres on two key concepts:</p>
+      <ul>
+        <li><strong>Well-Formed Transactions</strong> — data can only be modified through controlled, auditable procedures.</li>
+        <li><strong>Separation of Duties</strong> — no single person can complete a sensitive transaction alone (e.g., a payment requires both an authoriser and a processor).</li>
+      </ul>
+      <p>Clark-Wilson is the model behind many financial and ERP systems — it is why your bank requires dual approval for large transfers.</p>
+
+      <h2>Why This Foundation Matters</h2>
+      <p>These concepts — CIA, GRC, security models — are not just theory for exams. They are the lens through which every real-world security decision is made. When I started seeing attacks and defences through this framework, the whole field started to make sense in a deeper way. This is the vision that keeps me motivated to keep going.</p>
     </section>
 
     <section class="post-share">
@@ -72,7 +115,7 @@ nc -zv example.com 443
         </article>
         <article class="card">
           <div class="card-img" aria-hidden="true"></div>
-          <p><a href="post-1-cybersecurity-and-ui.html">Phishing &amp; Social Engineering</a></p>
+          <p><a href="post-1-cybersecurity-and-ui.html">My Cybersecurity Journey</a></p>
         </article>
         <article class="card">
           <div class="card-img" aria-hidden="true"></div>

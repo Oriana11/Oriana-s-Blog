@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>OWASP Top 10 Explained — What Every Dev Needs to Know – Cyberstack Blog</title>
+  <title>Day 2 at ReDI: Networking Fundamentals Through a Security Lens – Cyberstack Blog</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code:wght@400;500;700&family=Montserrat:wght@700&display=optional" rel="stylesheet">
@@ -22,55 +22,80 @@
 
   <article class="post-article">
     <section class="post-header">
-      <h1>OWASP Top 10 Explained — What Every Dev Needs to Know</h1>
-      <p class="post-meta">By Oriana • Mar 20 2026 • 8 min read •
-        <a href="../index.html?filter=security">#security</a>
-        <a href="../index.html?filter=certifications">#certifications</a>
+      <h1>Day 2 at ReDI: Networking Fundamentals Through a Security Lens</h1>
+      <p class="post-meta">By Oriana • Mar 20 2026 • 7 min read •
+        <a href="../index.html?filter=networking">#networking</a>
+        <a href="../index.html?filter=journey">#journey</a>
+        <a href="../index.html?filter=redi">#ReDI</a>
       </p>
     </section>
 
+    <section class="post-hero">
+      <img src="../../images/network.png" alt="Networking and hardware">
+    </section>
+
     <section class="post-content">
-      <p>The OWASP Top 10 is a standard awareness document for web application security. It represents the broadest consensus about the most critical security risks to web applications. If you are writing code that runs on the web, this list is not optional reading — it is the baseline.</p>
+      <p>Day two of the ReDI Cybersecurity course and we dived straight into networking. I had covered some of this at university, so parts of it were familiar territory — but revisiting it through a security lens made everything feel fresh and sharper. When you already know what a packet is, understanding how an attacker manipulates one hits differently. This is my write-up of the core concepts we went through.</p>
 
-      <p>Published by the Open Web Application Security Project (OWASP), it is updated roughly every three to four years as the threat landscape evolves. The current edition reflects the state of real-world vulnerabilities collected from hundreds of organisations worldwide. Let's walk through the most impactful ones and what you can actually do about them.</p>
+      <h2>What is a Network? Switches &amp; Routers</h2>
+      <p>A network is any collection of devices connected together to share resources and communicate. The devices doing the connecting — switches and routers — each have a specific role:</p>
+      <ul>
+        <li><strong>Switch</strong> — operates at Layer 2 (Data Link). Connects devices within the same local network (LAN) and forwards data based on MAC addresses. Switches learn which device is on which port and send traffic only where it needs to go.</li>
+        <li><strong>Router</strong> — operates at Layer 3 (Network). Connects different networks together and forwards traffic based on IP addresses. Your home router connects your LAN to the internet.</li>
+      </ul>
 
-      <h2>A01 — Broken Access Control</h2>
-      <p>The number one risk. Access control enforces policy such that users cannot act outside of their intended permissions. When these controls fail, attackers can access other users' accounts, view sensitive data, or modify data they should not touch. The most common issue is trusting that only authorised users will ever discover or call a given endpoint — they will not. Attackers enumerate APIs, inspect JavaScript bundles, and probe every route they can find.</p>
-      <pre><code>// Never rely on client-side checks alone
-// BAD: The button is hidden in the UI, but the endpoint is unprotected
-app.delete('/api/admin/user/:id', (req, res) => {
-  // No auth check — any logged-in user can reach this
-  db.deleteUser(req.params.id);
-});
+      <h2>Data Units — Bits, Bytes and Beyond</h2>
+      <p>Before anything travels across a network it is broken down into the smallest possible unit: the <strong>bit</strong> (a 0 or a 1). From there:</p>
+      <ul>
+        <li><strong>1 Byte</strong> = 8 bits</li>
+        <li><strong>1 Kilobyte (KB)</strong> = 1,024 bytes</li>
+        <li><strong>1 Megabyte (MB)</strong> = 1,024 KB</li>
+        <li><strong>1 Gigabyte (GB)</strong> = 1,024 MB</li>
+      </ul>
+      <p>Network speeds are measured in bits per second (bps, Mbps, Gbps). File sizes are measured in bytes. A 100 Mbps connection downloads a 100 MB file in about 8 seconds, not 1.</p>
 
-// GOOD: Always verify server-side
-app.delete('/api/admin/user/:id', requireRole('admin'), (req, res) => {
-  db.deleteUser(req.params.id);
-});</code></pre>
+      <h2>IP Addresses and MAC Addresses</h2>
+      <p>Every device on a network has two addresses that serve different purposes:</p>
+      <ul>
+        <li><strong>MAC Address</strong> — a hardware address burned into the network interface card. It looks like <code>00:1A:2B:3C:4D:5E</code>. Used for communication within a local network (Layer 2). Think of it like your name — it stays with the device.</li>
+        <li><strong>IP Address</strong> — a logical address assigned to a device. IPv4 looks like <code>192.168.1.10</code>. Used for routing traffic across networks (Layer 3). Think of it like your home address — it can change.</li>
+      </ul>
 
-      <h2>A02 — Cryptographic Failures</h2>
-      <p>Previously called "Sensitive Data Exposure", this covers failures related to cryptography — or the absence of it. Transmitting passwords or tokens over plain HTTP, storing passwords with weak hashes (MD5, SHA-1), or using deprecated algorithms (DES, RC4) all fall here. The fix is straightforward: use TLS everywhere, hash passwords with bcrypt or Argon2, and never roll your own crypto.</p>
+      <h2>The OSI Model vs the TCP/IP Model</h2>
+      <p>Both models describe how data moves across a network, just with different levels of abstraction.</p>
+      <p>The <strong>OSI Model</strong> has 7 layers: Physical, Data Link, Network, Transport, Session, Presentation, Application. It is a conceptual framework — great for understanding where a problem lives or where a security control applies.</p>
+      <p>The <strong>TCP/IP Model</strong> is the practical one — 4 layers: Network Access, Internet, Transport, Application. It is what actually runs the internet.</p>
+      <p>From a security perspective: firewalls work at Layer 3/4, WAFs at Layer 7, switches at Layer 2. Knowing the layer tells you what an attacker can and can’t hide from a given control.</p>
 
-      <h2>A03 — Injection</h2>
-      <p>SQL injection, command injection, LDAP injection — any time user-supplied data is sent to an interpreter without sanitisation, you have an injection vulnerability. Despite being decades old, injection attacks are still devastatingly common because they are easy to introduce and sometimes subtle to spot.</p>
-      <pre><code>// BAD: user input directly in query
-const query = `SELECT * FROM users WHERE name = '${req.body.name}'`;
+      <h2>Subnetting and CIDR</h2>
+      <p>Subnetting divides a large network into smaller sub-networks, which limits the blast radius if one subnet is compromised. <strong>CIDR (Classless Inter-Domain Routing)</strong> notation expresses both the IP address and the subnet mask in one string:</p>
+      <pre><code>192.168.1.0/24
+# /24 = first 24 bits are the network part
+# 8 bits left for hosts → 256 addresses (254 usable)
 
-// GOOD: parameterised query
-const query = 'SELECT * FROM users WHERE name = ?';
-db.execute(query, [req.body.name]);</code></pre>
+10.0.0.0/8      → ~16 million hosts
+172.16.0.0/16   → ~65,000 hosts
+192.168.1.0/24  → 254 hosts (typical home LAN)</code></pre>
 
-      <h2>A05 — Security Misconfiguration</h2>
-      <p>This is the most commonly seen issue in practice. Default credentials left unchanged, unnecessary features enabled, directory listing exposed, stack traces visible in production, missing security headers — all of these count. A solid security misconfiguration checklist should be part of every deployment pipeline. Start with: disable debug mode in prod, set <code>Content-Security-Policy</code>, <code>X-Frame-Options</code>, and <code>Strict-Transport-Security</code> headers, and remove all default admin accounts.</p>
+      <h2>TCP vs UDP</h2>
+      <p>Both are Transport Layer (Layer 4) protocols with very different trade-offs:</p>
+      <ul>
+        <li><strong>TCP (Transmission Control Protocol)</strong> — reliable, ordered, connection-oriented. Uses a three-way handshake (SYN → SYN-ACK → ACK). Every packet is acknowledged. Used for HTTP, SSH, email — anything where losing data is unacceptable.</li>
+        <li><strong>UDP (User Datagram Protocol)</strong> — fast, connectionless, no guarantees. Used for DNS, video streaming, VoIP, and online games — where speed matters more than perfection.</li>
+      </ul>
+      <p>Security note: TCP’s handshake is targeted by SYN flood attacks. UDP’s lack of connection state makes it useful for amplification attacks.</p>
 
-      <h2>A07 — Identification and Authentication Failures</h2>
-      <p>Weak passwords, no rate limiting on login endpoints, session tokens that don't expire, credentials in URLs — this category covers all the ways authentication can go wrong. The mitigations are well-established: multi-factor authentication, strong password policies enforced server-side, short session lifetimes, and secure cookie attributes (<code>HttpOnly</code>, <code>Secure</code>, <code>SameSite=Strict</code>).</p>
+      <h2>The Encapsulation Process</h2>
+      <p>Encapsulation is what happens as data travels <em>down</em> the OSI layers before being sent — each layer wraps the data with its own header, adding the information that layer needs to do its job. On the receiving end, de-encapsulation strips each header back off as the data climbs back up.</p>
+      <pre><code>Application Layer   →  Data       (e.g. HTTP request)
+Transport Layer     →  Segment    (adds TCP/UDP header: ports, seq numbers)
+Network Layer       →  Packet     (adds IP header: source &amp; dest IP)
+Data Link Layer     →  Frame      (adds MAC header + FCS trailer)
+Physical Layer      →  Bits       (electrical signals, light, radio waves)</code></pre>
+      <p>Understanding encapsulation is key for packet analysis tools like Wireshark, where you inspect each layer’s headers directly.</p>
 
-      <h2>A10 — Server-Side Request Forgery (SSRF)</h2>
-      <p>SSRF lets an attacker trick the server into making HTTP requests to an arbitrary destination — including internal services behind a firewall, cloud metadata endpoints, or other parts of your infrastructure. It became prominent enough to earn its own Top 10 category after real-world attacks on major cloud providers. The defence: validate and allowlist URLs before fetching, never forward raw user input to internal HTTP clients.</p>
-
-      <h2>Where to Go From Here</h2>
-      <p>Reading the list is step one. The OWASP project also provides testing guides, cheat sheets, and the OWASP WebGoat deliberately vulnerable application for hands-on practice. If you are working toward a security certification — OSCP, CEH, or CompTIA Security+ — the Top 10 is foundational material. If you are just building websites, it is still the most efficient hour of security education you will spend this year.</p>
+      <h2>Bringing It Together</h2>
+      <p>Even though I had touched on most of these at university, going through them again in a security context made a real difference. It is one thing to know that a router forwards packets — it is another to understand that an attacker on your LAN can intercept Layer 2 traffic before it even reaches the router. The fundamentals are not background noise. They are the map you use to understand where attacks happen.</p>
     </section>
 
     <section class="post-share">
@@ -85,15 +110,15 @@ db.execute(query, [req.body.name]);</code></pre>
       <div class="related-carousel">
         <article class="card">
           <div class="card-img" aria-hidden="true"></div>
-          <p><a href="post-1-cybersecurity-and-ui.html">Phishing &amp; Social Engineering</a></p>
+          <p><a href="post-1-cybersecurity-and-ui.html">My Cybersecurity Journey</a></p>
+        </article>
+        <article class="card">
+          <div class="card-img" aria-hidden="true"></div>
+          <p><a href="post-2-networking-fundamentals.html">Intro to Cybersecurity</a></p>
         </article>
         <article class="card">
           <div class="card-img" aria-hidden="true"></div>
           <p><a href="post-4-securing-frontend.html">Securing Your Frontend</a></p>
-        </article>
-        <article class="card">
-          <div class="card-img" aria-hidden="true"></div>
-          <p><a href="post-2-networking-fundamentals.html">Networking Fundamentals</a></p>
         </article>
       </div>
     </section>

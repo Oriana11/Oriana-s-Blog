@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Phishing in 2026: How Social Engineering Still Beats Every Firewall – Cyberstack Blog</title>
+  <title>My Cybersecurity Journey: ReDI, TryHackMe &amp; Finding My Path – Cyberstack Blog</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code:wght@400;500;700&family=Montserrat:wght@700&display=optional" rel="stylesheet">
@@ -22,48 +22,29 @@
 
   <article class="post-article">
     <section class="post-header">
-      <h1>Phishing in 2026: How Social Engineering Still Beats Every Firewall</h1>
-      <p class="post-meta">By Oriana • Mar 20 2026 • 6 min read •
+      <h1>My Cybersecurity Journey: ReDI, TryHackMe &amp; Finding My Path</h1>
+      <p class="post-meta">By Oriana • Mar 20 2026 • 4 min read •
         <a href="../index.html?filter=security">#security</a>
-        <a href="../index.html?filter=tutorial">#tutorial</a>
+        <a href="../index.html?filter=journey">#journey</a>
+        <a href="../index.html?filter=redi">#ReDI</a>
       </p>
     </section>
 
+    <section class="post-hero">
+      <img src="../../images/pentester.PNG" alt="Pentester at work">
+    </section>
+
     <section class="post-content">
-      <p>Organisations spend millions on firewalls, intrusion detection systems, and endpoint protection. Then someone clicks a link in an email and hands over their credentials anyway. Phishing is not a new attack — it has been around since the mid-1990s — and yet it remains the single most common initial access vector in breaches year after year. The reason is simple: it does not attack the technology. It attacks the person.</p>
+      <p>Starting my cybersecurity journey has felt like stepping into a whole new world—one full of curiosity, challenge, and that spark of excitement you get when something just clicks. I didn't come in knowing everything. I came in with interest, energy, and the feeling that this field had something big to offer me. And honestly, that feeling has only grown stronger.</p>
 
-      <p>This post breaks down how phishing works in 2026, the techniques attackers use, the technical indicators you can actually detect, and what genuinely effective defence looks like.</p>
+      <h2>Joining ReDI School</h2>
+      <p>Joining the ReDI Cybersecurity course was the moment everything started to take shape. The course didn't just teach us concepts—it opened doors. We explored different areas of cybersecurity, learned how the pieces fit together, and got hands‑on with real tools. One of the most exciting parts was being encouraged to learn through TryHackMe. It wasn't just reading or listening; it was doing. Solving challenges, experimenting, breaking things (in a safe way), and understanding how attacks actually work.</p>
 
-      <h2>How a Phishing Attack Works</h2>
-      <p>A classic phishing attack has three stages: lure, harvest, and exploit. The lure is a message — email, SMS (smishing), voice call (vishing), or even a QR code (quishing) — designed to create urgency and push the target to act without thinking. The harvest stage is a credential-capture page that looks legitimate. The exploit is whatever the attacker does with the stolen credentials: account takeover, lateral movement inside a network, data exfiltration.</p>
+      <h2>The TryHackMe Assessment</h2>
+      <p>As part of that learning, I took a TryHackMe test designed to help us discover which cybersecurity role might suit our interests. It wasn't a formal exam—more like a fun, interactive way to see what direction we naturally lean toward. My result came back as <strong>Pentester / Red Team</strong>, and I can't lie, that result lit me up. It matched everything I found myself drawn to during the course: creative problem‑solving, thinking like an attacker, and uncovering weaknesses so they can be fixed.</p>
 
-      <p>Modern phishing kits are remarkably sophisticated. They use real-time proxies (adversary-in-the-middle, or AiTM) that sit between the victim and the real website, relaying traffic so the victim sees a genuine session — including valid MFA prompts — while the attacker's kit steals the session cookie. Traditional MFA is bypassed entirely.</p>
-
-      <h2>Spear Phishing and BEC</h2>
-      <p>Generic phishing casts a wide net. Spear phishing targets a specific individual using personal context — their name, employer, recent activity, colleagues' names — gathered via OSINT (open-source intelligence). Business Email Compromise (BEC) is spear phishing at the corporate level: an attacker impersonates a CEO or CFO to instruct finance staff to transfer funds or change payment details. BEC caused over $2.9 billion in reported losses in a single year according to the FBI IC3 report.</p>
-
-      <h2>Technical Indicators to Catch Phishing Emails</h2>
-      <p>While attackers are creative, phishing emails leave technical traces that email security tooling can detect. Know what to look for:</p>
-
-      <pre><code># Check SPF, DKIM, and DMARC alignment in email headers
-# A FAIL on any of these is a strong signal
-
-Received-SPF: fail (domain does not designate IP as permitted sender)
-DKIM-Signature: ... (missing or invalid = suspicious)
-From: ceo@company.com  # Display name — easy to spoof
-Reply-To: attacker@evil.com  # Often different from From:</code></pre>
-
-      <p>SPF (Sender Policy Framework) declares which mail servers are authorised to send on behalf of a domain. DKIM (DomainKeys Identified Mail) cryptographically signs the message so tampering is detectable. DMARC (Domain-based Message Authentication, Reporting and Conformance) ties SPF and DKIM together and tells receiving servers what to do with failures. A domain with a strict DMARC policy of <code>p=reject</code> is significantly harder to spoof directly.</p>
-
-      <h2>Defending Against AiTM and Bypassed MFA</h2>
-      <p>Because AiTM attacks steal session cookies rather than passwords, app-based TOTP and SMS OTP codes do not stop them. The defences that do work are phishing-resistant MFA: FIDO2 hardware security keys (YubiKey, Titan Key) and passkeys. Both are cryptographically bound to the legitimate domain — a fake site physically cannot complete the authentication handshake, regardless of how convincing it looks.</p>
-
-      <p>Conditional access policies that evaluate signals beyond the initial login — device compliance, anomalous location, unusual access patterns — provide a second layer. Even if an attacker steals a valid session, a policy that re-evaluates risk continuously can terminate it before damage is done.</p>
-
-      <h2>The Human Layer</h2>
-      <p>Technology controls help but they are not enough on their own. Security awareness training that uses simulated phishing campaigns — where employees receive realistic test phishes and immediate contextual feedback when they click — consistently outperforms annual compliance videos. The goal is not to shame people who click; it is to build the habit of pausing before acting on any message that creates urgency or asks for credentials.</p>
-
-      <p>The most dangerous thing about phishing is that it works on everyone, including security professionals. Knowing how the attack works is the first step to developing the instincts to spot it.</p>
+      <h2>Only the Beginning</h2>
+      <p>The whole experience—from starting the course to diving into TryHackMe—made me realize that cybersecurity isn't just something I want to learn. It's something I'm genuinely excited to grow into. And this is only the beginning.</p>
     </section>
 
     <section class="post-share">

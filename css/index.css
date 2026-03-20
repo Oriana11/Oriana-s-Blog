@@ -12,7 +12,7 @@
   align-items: center;
   justify-content: center;
   background: linear-gradient(180deg, rgba(10,12,20,.75), rgba(24,26,36,.88)),
-              url('../images/cybersecurityhero.PNG') center / cover no-repeat;
+              url('../images/pc.png') center / cover no-repeat;
 }
 
 .hero-content {
@@ -56,6 +56,8 @@
   min-height: 200px;
   background: linear-gradient(135deg, #334, #112);
   border-radius: 12px;
+  object-fit: cover;
+  display: block;
 }
 
 .featured-copy h2 {
@@ -110,6 +112,8 @@
   background: linear-gradient(135deg, #334, #112);
   border-radius: 8px;
   margin-bottom: 0.75rem;
+  object-fit: cover;
+  display: block;
 }
 
 .post-card h3 {
