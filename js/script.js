@@ -120,3 +120,60 @@ function debounce(fn, ms) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 })();
+
+/* --- Matrix binary rain --- */
+(function () {
+  const canvas = document.getElementById('matrix-canvas');
+  if (!canvas) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const ctx      = canvas.getContext('2d');
+  const FONT_SIZE = 14;
+  const CHARS     = '01';
+  let cols, drops;
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+    cols  = Math.floor(canvas.width / FONT_SIZE);
+    drops = Array.from({ length: cols }, () =>
+      Math.floor(Math.random() * -(canvas.height / FONT_SIZE))
+    );
+  }
+
+  function draw() {
+    /* fade previous frame — controls trail length */
+    ctx.fillStyle = 'rgba(10, 10, 10, 0.06)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.font = FONT_SIZE + 'px "Fira Code", monospace';
+
+    for (let i = 0; i < drops.length; i++) {
+      const char = CHARS[Math.floor(Math.random() * CHARS.length)];
+      const x    = i * FONT_SIZE;
+      const y    = drops[i] * FONT_SIZE;
+
+      /* bright white head */
+      ctx.fillStyle = '#e0fff8';
+      ctx.fillText(char, x, y);
+
+      /* reset column randomly once it clears the bottom */
+      if (y > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+
+  function start() {
+    resize();
+    if (canvas.width === 0) {
+      requestAnimationFrame(start);
+      return;
+    }
+    window.addEventListener('resize', debounce(resize, 200));
+    setInterval(draw, 45);
+  }
+
+  requestAnimationFrame(start);
+})();
