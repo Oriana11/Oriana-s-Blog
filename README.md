@@ -8,7 +8,7 @@ Built with plain HTML, CSS, and JavaScript — no frameworks, no build tools, fu
 
 ## 🔗 Live Site
 
-[View the blog →](https://oriana11.github.io/Oriana-s-Blog)
+[View the blog →](https://oriana11.github.io/Oriana-s-Blog/html/index.html)
 
 ## 🛠️ Tech Stack
 
