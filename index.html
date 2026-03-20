@@ -3,28 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <title>My Blog – Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code:wght@400;500;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <header>
-    <h1>Welcome to My Blog</h1>
+  <header class="site-nav">
+    <div class="nav-brand">LOGO</div>
     <nav>
-      <a href="about.html">About</a> |
-      <a href="posts/2024-01-01-welcome.html">First Post</a>
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="#featured">Posts</a>
+      <a href="about.html">About</a>
+      <button class="menu-toggle" aria-label="Open menu">☰</button>
     </nav>
   </header>
 
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Secure, Beautiful Blog Design</h1>
+      <p>Learn how to build a modern site</p>
+      <a href="#featured" class="btn btn-primary">Start Reading →</a>
+    </div>
+  </section>
+
   <main>
-    <section>
-      <h2>Latest Posts</h2>
-      <ul>
-        <li><a href="posts/2024-01-01-welcome.html">Hello World – Jan 1 2024</a></li>
-      </ul>
+    <section id="featured" class="featured-post">
+      <article>
+        <div class="featured-img" aria-hidden="true"></div>
+        <div class="featured-copy">
+          <h2>Featured Post Title</h2>
+          <p>Why cybersecurity and clean UI are both crucial in modern web development.</p>
+          <p class="meta">By Oriana • Mar 20 2026 • 6 min read</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="recent-posts">
+      <h2>Recent Posts</h2>
+      <div class="posts-grid">
+        <article class="post-card"><div class="post-img" aria-hidden="true"></div><h3>Post One</h3><p>Short excerpt...</p><a href="#" class="read-more">Read more</a></article>
+        <article class="post-card"><div class="post-img" aria-hidden="true"></div><h3>Post Two</h3><p>Short excerpt...</p><a href="#" class="read-more">Read more</a></article>
+        <article class="post-card"><div class="post-img" aria-hidden="true"></div><h3>Post Three</h3><p>Short excerpt...</p><a href="#" class="read-more">Read more</a></article>
+        <article class="post-card"><div class="post-img" aria-hidden="true"></div><h3>Post Four</h3><p>Short excerpt...</p><a href="#" class="read-more">Read more</a></article>
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>© 2026 <a href="https://github.com/Oriana11">Oriana</a></p>
+    <div class="footer-inner">
+      <nav class="footer-nav"><a href="index.html">Home</a><a href="#featured">Posts</a><a href="about.html">About</a></nav>
+      <div class="social">Social icons</div>
+      <p>© 2026 Oriana</p>
+    </div>
   </footer>
 
   <script src="assets/js/script.js"></script>
