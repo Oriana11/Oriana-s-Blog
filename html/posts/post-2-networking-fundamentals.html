@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Networking Fundamentals Every Developer Should Know – Cyberstack Blog</title>
+  <title>Networking Fundamentals for Cybersecurity: Know the Battlefield – Cyberstack Blog</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code:wght@400;500;700&family=Montserrat:wght@700&display=optional" rel="stylesheet">
@@ -22,7 +22,7 @@
 
   <article class="post-article">
     <section class="post-header">
-      <h1>Networking Fundamentals Every Developer Should Know</h1>
+      <h1>Networking Fundamentals for Cybersecurity: Know the Battlefield</h1>
       <p class="post-meta">By Oriana • Mar 20 2026 • 7 min read •
         <a href="../index.html?filter=networking">#networking</a>
         <a href="../index.html?filter=cloud">#cloud</a>
@@ -30,7 +30,7 @@
     </section>
 
     <section class="post-content">
-      <p>You do not need to be a network engineer to write good software, but you do need a working mental model of how data moves from one machine to another. Misunderstanding the network is responsible for an enormous share of bugs, security vulnerabilities, and performance problems that plague production systems. This article covers the concepts that come up most often in day-to-day development work.</p>
+      <p>Every attack travels across a network. Malware exfiltrates data over TCP. Command-and-control servers communicate via DNS. Man-in-the-middle attacks exploit gaps in TLS. If you want to understand cybersecurity — whether you are doing penetration testing, threat modelling, or building a secure system — you first need a solid mental model of how data actually moves from machine to machine. This post covers the core networking concepts that underpin most of the attacks and defences you will encounter.</p>
 
       <h2>The OSI Model in Practice</h2>
       <p>The OSI model is seven layers of abstraction that describe how a packet of data travels from an application on one machine to an application on another. As a developer, you primarily operate at Layer 7 (Application — HTTP, WebSockets, DNS), Layer 4 (Transport — TCP, UDP), and occasionally Layer 3 (Network — IP addressing and routing). Understanding which layer a problem lives at saves significant debugging time.</p>
@@ -50,8 +50,10 @@ nc -zv example.com 443
       <h2>HTTPS, TLS, and What a Certificate Actually Does</h2>
       <p>TLS (often still called SSL) provides two things: encryption of data in transit and authentication that you are talking to who you think you are. Authentication is done via certificates signed by a trusted Certificate Authority. When a browser says "Not Secure", it means one of those two guarantees is missing or untrusted. For development, use tools like <code>mkcert</code> to issue locally-trusted certificates rather than disabling TLS entirely — skipping TLS locally trains you towards bad habits and masks real issues.</p>
 
-      <h2>Cloud Networking Basics</h2>
-      <p>Cloud platforms like AWS, Azure, and GCP map closely onto the same concepts: Virtual Private Clouds (VPCs) are your Layer 3 subnets, Security Groups are stateful firewall rules at the host level, and load balancers operate at Layer 4 or Layer 7. If traffic is not reaching your service, work down from Layer 7 — is the app healthy? Is the security group allowing the port? Is the route table pointing at the right gateway? Systematic thinking by layer beats guessing every time.</p>
+      <h2>Network Security Controls — How They Map to the OSI Model</h2>
+      <p>Security controls exist at every layer. Firewalls operate at Layer 3 and 4, filtering by IP address and port. Web Application Firewalls (WAFs) operate at Layer 7, inspecting HTTP payloads for attack patterns. Intrusion Detection Systems (IDS) and Intrusion Prevention Systems (IPS) sit inline and analyse traffic across multiple layers simultaneously. Knowing which layer a control operates at tells you what it can and cannot see — and therefore what attackers can hide from it. A packet-filtering firewall blocking port 443 stops nothing if the attacker tunnels their C2 traffic inside HTTPS on that same port.</p>
+
+      <p>In cloud environments, Virtual Private Clouds (VPCs) are Layer 3 subnets, Security Groups are stateful host-level firewalls, and network ACLs are stateless packet filters. Understanding this layering helps you reason about east-west movement inside a compromised cloud environment — which is exactly what a threat actor does after initial access.</p>
     </section>
 
     <section class="post-share">
@@ -70,7 +72,7 @@ nc -zv example.com 443
         </article>
         <article class="card">
           <div class="card-img" aria-hidden="true"></div>
-          <p><a href="post-1-cybersecurity-and-ui.html">Cybersecurity &amp; Clean UI</a></p>
+          <p><a href="post-1-cybersecurity-and-ui.html">Phishing &amp; Social Engineering</a></p>
         </article>
         <article class="card">
           <div class="card-img" aria-hidden="true"></div>
@@ -81,12 +83,21 @@ nc -zv example.com 443
 
     <section class="comments">
       <h2>Comments</h2>
-      <form>
-        <label>Name<div><input type="text" name="name" autocomplete="name"></div></label>
-        <label>Email<div><input type="email" name="email" autocomplete="email"></div></label>
-        <label>Comment<div><textarea name="comment" rows="4"></textarea></div></label>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+      <script src="https://giscus.app/client.js"
+        data-repo="Oriana11/Oriana-s-Blog"
+        data-repo-id="R_kgDORsEo3Q"
+        data-category="Announcements"
+        data-category-id="DIC_kwDORsEo3c4C42jN"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="dark"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+      </script>
     </section>
   </article>
 

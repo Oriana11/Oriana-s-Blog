@@ -95,6 +95,7 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 1rem;
+  position: relative;
   transition: transform 0.18s ease, background 0.18s ease;
 }
 
@@ -125,6 +126,25 @@
   color: var(--color-primary);
   font-weight: var(--fw-bold);
   text-decoration: none;
+}
+
+/* Stretch the read-more link to cover the entire card */
+.post-card .stretched-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+
+/* Featured post title link */
+.featured-copy h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.featured-copy h2 a:hover {
+  color: var(--color-primary);
 }
 
 /* --- Posts toolbar: search + filter chips --- */

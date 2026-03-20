@@ -3,6 +3,23 @@
    Requires: style.css (base)
    ============================================================ */
 
+/* --- Giscus comments widget --- */
+
+.comments {
+  margin-bottom: 2rem;
+}
+
+.comments h2 {
+  margin-bottom: 1.25rem;
+}
+
+.giscus,
+.giscus-frame {
+  width: 100%;
+  border: none;
+  color-scheme: dark;
+}
+
 /* --- Article wrapper --- */
 
 .post-article {
