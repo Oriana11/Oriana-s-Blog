@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Networking Fundamentals Every Developer Should Know – Cyberstack Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code:wght@400;500;700&family=Montserrat:wght@700&display=optional" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/post.css">
+</head>
+<body>
+  <header class="site-nav">
+    <a class="nav-brand" href="../index.html">Cyberstack Blog</a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../index.html#featured">Posts</a>
+      <a href="../about.html">About</a>
+    </nav>
+    <button class="menu-toggle" aria-label="Open menu">☰</button>
+  </header>
+
+  <article class="post-article">
+    <section class="post-header">
+      <h1>Networking Fundamentals Every Developer Should Know</h1>
+      <p class="post-meta">By Oriana • Mar 20 2026 • 7 min read •
+        <a href="../index.html?filter=networking">#networking</a>
+        <a href="../index.html?filter=cloud">#cloud</a>
+      </p>
+    </section>
+
+    <section class="post-content">
+      <p>You do not need to be a network engineer to write good software, but you do need a working mental model of how data moves from one machine to another. Misunderstanding the network is responsible for an enormous share of bugs, security vulnerabilities, and performance problems that plague production systems. This article covers the concepts that come up most often in day-to-day development work.</p>
+
+      <h2>The OSI Model in Practice</h2>
+      <p>The OSI model is seven layers of abstraction that describe how a packet of data travels from an application on one machine to an application on another. As a developer, you primarily operate at Layer 7 (Application — HTTP, WebSockets, DNS), Layer 4 (Transport — TCP, UDP), and occasionally Layer 3 (Network — IP addressing and routing). Understanding which layer a problem lives at saves significant debugging time.</p>
+
+      <p>When your HTTP request times out, is the problem a dead server (Layer 7), a broken TCP handshake (Layer 4), or an unreachable IP (Layer 3)? Each diagnosis requires different tools: <code>curl</code> for Layer 7, <code>telnet</code> or <code>nc</code> for Layer 4, <code>ping</code> and <code>traceroute</code> for Layer 3.</p>
+
+      <h2>TCP vs UDP: Choosing Correctly</h2>
+      <p>TCP guarantees delivery and ordering at the cost of overhead — the three-way handshake, acknowledgements, retransmission. It is the right choice for anything where losing data is unacceptable: HTTP, database connections, file transfers. UDP skips all of that and just fires packets. It is right for latency-sensitive streams where a dropped packet is preferable to a delayed one: video calls, online games, DNS lookups.</p>
+
+      <pre><code># Quick check: is a remote TCP port open?
+nc -zv example.com 443
+# Connection to example.com port 443 [tcp/https] succeeded!</code></pre>
+
+      <h2>DNS Matters More Than You Think</h2>
+      <p>DNS converts human-readable hostnames into IP addresses. It is cached aggressively at every layer — OS, browser, resolver — which means a misconfigured TTL can haunt you for hours after a deployment fix. Know your TTLs: set them low (60–300 s) several days before a migration, make the change, then raise them again. And always query the authoritative nameserver directly when debugging, not your local cache.</p>
+
+      <h2>HTTPS, TLS, and What a Certificate Actually Does</h2>
+      <p>TLS (often still called SSL) provides two things: encryption of data in transit and authentication that you are talking to who you think you are. Authentication is done via certificates signed by a trusted Certificate Authority. When a browser says "Not Secure", it means one of those two guarantees is missing or untrusted. For development, use tools like <code>mkcert</code> to issue locally-trusted certificates rather than disabling TLS entirely — skipping TLS locally trains you towards bad habits and masks real issues.</p>
+
+      <h2>Cloud Networking Basics</h2>
+      <p>Cloud platforms like AWS, Azure, and GCP map closely onto the same concepts: Virtual Private Clouds (VPCs) are your Layer 3 subnets, Security Groups are stateful firewall rules at the host level, and load balancers operate at Layer 4 or Layer 7. If traffic is not reaching your service, work down from Layer 7 — is the app healthy? Is the security group allowing the port? Is the route table pointing at the right gateway? Systematic thinking by layer beats guessing every time.</p>
+    </section>
+
+    <section class="post-share">
+      <span>Share:</span>
+      <a href="#">Twitter</a> ·
+      <a href="#">LinkedIn</a> ·
+      <a href="#">Copy link</a>
+    </section>
+
+    <section class="related-posts">
+      <h2>Related Posts</h2>
+      <div class="related-carousel">
+        <article class="card">
+          <div class="card-img" aria-hidden="true"></div>
+          <p><a href="post-4-securing-frontend.html">Securing Your Frontend</a></p>
+        </article>
+        <article class="card">
+          <div class="card-img" aria-hidden="true"></div>
+          <p><a href="post-1-cybersecurity-and-ui.html">Cybersecurity &amp; Clean UI</a></p>
+        </article>
+        <article class="card">
+          <div class="card-img" aria-hidden="true"></div>
+          <p><a href="post-3-owasp-top-10.html">OWASP Top 10 Explained</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="comments">
+      <h2>Comments</h2>
+      <form>
+        <label>Name<div><input type="text" name="name" autocomplete="name"></div></label>
+        <label>Email<div><input type="email" name="email" autocomplete="email"></div></label>
+        <label>Comment<div><textarea name="comment" rows="4"></textarea></div></label>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </section>
+  </article>
+
+  <footer>
+    <div class="footer-inner">
+      <p>© 2026 Oriana</p>
+      <div class="social-links">
+        <a href="https://github.com/Oriana11" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/oriana-c-29976474/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <button id="back-to-top" hidden aria-label="Back to top">↑</button>
+  <script src="../../js/script.js"></script>
+</body>
+</html>
