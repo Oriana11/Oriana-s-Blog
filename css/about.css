@@ -1,0 +1,115 @@
+/* ============================================================
+   ABOUT — about page specific styles
+   Requires: style.css (base)
+   ============================================================ */
+
+/* --- Page wrapper --- */
+
+.about-page {
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 4rem 1.5rem 3rem;
+}
+
+/* --- Hero / intro --- */
+
+.about-hero {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 2rem;
+  align-items: start;
+  margin-bottom: 3rem;
+}
+
+.about-avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
+  display: block;
+}
+
+.about-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+  border-radius: 50%;
+}
+
+.about-intro h1 {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+}
+
+.about-intro p {
+  margin: 0 0 0.25rem;
+  color: #d0d0d0;
+  line-height: 1.75;
+}
+
+/* --- Items list (mission, stack, links) --- */
+
+.about-items {
+  margin: 0.9rem 0 0;
+  padding-left: 0;
+  list-style: none;
+  color: var(--color-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.about-items li {
+  margin: 0;
+  line-height: 1.7;
+  padding-left: 1.1rem;
+  position: relative;
+}
+
+.about-items li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--color-primary);
+}
+
+.about-items a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.about-items a:hover {
+  color: var(--color-accent);
+}
+
+/* --- Timeline --- */
+
+.about-timeline {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.about-timeline h2 {
+  margin-top: 0;
+  font-family: var(--font-heading);
+}
+
+.about-timeline ul {
+  margin: 1.2rem 0 0;
+  padding-left: 1.2rem;
+  color: var(--color-muted);
+}
+
+.about-timeline li {
+  margin: 0.8rem 0;
+  line-height: 1.7;
+}

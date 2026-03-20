@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Blog – Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code:wght@400;500;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+  <header class="site-nav">
+    <a class="nav-brand" href="index.html">Cyberstack Blog</a>
+    <nav>
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="#featured">Posts</a>
+      <a href="about.html">About</a>
+    </nav>
+    <button class="menu-toggle" aria-label="Open menu">☰</button>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Secure, Beautiful Blog Design</h1>
+      <p>Learn how to build a modern site</p>
+      <a href="#featured" class="btn btn-primary">Start Reading →</a>
+    </div>
+  </section>
+
+  <main>
+    <section id="featured" class="featured-post">
+      <article>
+        <div class="featured-img" aria-hidden="true"></div>
+        <div class="featured-copy">
+          <h2>Featured Post Title</h2>
+          <p>Why cybersecurity and clean UI are both crucial in modern web development.</p>
+          <p class="meta">By Oriana • Mar 20 2026 • 6 min read</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="recent-posts">
+      <h2>Recent Posts</h2>
+
+      <div class="posts-toolbar">
+        <input class="search-input" type="search" id="post-search"
+          placeholder="Search posts…" aria-label="Search posts" autocomplete="off">
+        <div class="filter-chips" role="group" aria-label="Filter by topic">
+          <button class="chip active" data-filter="all"            aria-pressed="true" >All</button>
+          <button class="chip"        data-filter="security"       aria-pressed="false">Security</button>
+          <button class="chip"        data-filter="networking"     aria-pressed="false">Networking</button>
+          <button class="chip"        data-filter="cloud"          aria-pressed="false">Cloud</button>
+          <button class="chip"        data-filter="certifications" aria-pressed="false">Certifications</button>
+          <button class="chip"        data-filter="tutorial"       aria-pressed="false">Tutorials</button>
+        </div>
+      </div>
+
+      <div class="posts-grid">
+        <article class="post-card" data-tags="security tutorial">
+          <div class="post-img" aria-hidden="true"></div>
+          <h3>Post One</h3>
+          <p>Short excerpt...</p>
+          <a href="#" class="read-more">Read more</a>
+        </article>
+        <article class="post-card" data-tags="networking cloud">
+          <div class="post-img" aria-hidden="true"></div>
+          <h3>Post Two</h3>
+          <p>Short excerpt...</p>
+          <a href="#" class="read-more">Read more</a>
+        </article>
+        <article class="post-card" data-tags="certifications tutorial">
+          <div class="post-img" aria-hidden="true"></div>
+          <h3>Post Three</h3>
+          <p>Short excerpt...</p>
+          <a href="#" class="read-more">Read more</a>
+        </article>
+        <article class="post-card" data-tags="security networking">
+          <div class="post-img" aria-hidden="true"></div>
+          <h3>Post Four</h3>
+          <p>Short excerpt...</p>
+          <a href="#" class="read-more">Read more</a>
+        </article>
+      </div>
+
+      <p class="no-results" hidden>No posts match your search.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="social">Social icons</div>
+      <p>© 2026 Oriana</p>
+    </div>
+  </footer>
+
+  <button id="back-to-top" hidden aria-label="Back to top">↑</button>
+  <script src="../assets/js/script.js"></script>
+</body>
+</html>

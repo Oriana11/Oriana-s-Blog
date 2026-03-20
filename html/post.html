@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Secure, Beautiful Blog Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code:wght@400;500;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/post.css">
+</head>
+<body>
+  <header class="site-nav">
+    <a class="nav-brand" href="index.html">Cyberstack Blog</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="index.html#featured">Posts</a>
+      <a href="about.html">About</a>
+    </nav>
+    <button class="menu-toggle" aria-label="Open menu">☰</button>
+  </header>
+
+  <article class="post-article">
+    <section class="post-header">
+      <h1>Secure, Beautiful Blog Design</h1>
+      <p class="post-meta">Oriana • Mar 20 2026 • 6 min read • <a href="#">#security</a> <a href="#">#ui</a></p>
+    </section>
+
+    <figure class="post-hero">
+      <img src="../css/Oriana.PNG" alt="Hero image for blog post">
+    </figure>
+
+    <section class="post-content">
+      <p>Writing a secure and beautiful blog is about combining consistent UI with real-world security best practices.</p>
+      <p>Use inline code when you mention things like <code>const secure = true;</code>.</p>
+
+      <h2>Code Example</h2>
+      <pre><code>function sanitize(input) {
+  return input.replace(/[<>'"/]/g, '');
+}</code></pre>
+
+      <p>Images and text sections make the reading flow easier. Add external links, emphasis, and useful hook lines.</p>
+    </section>
+
+    <section class="post-share">
+      <span>Share:</span> <a href="#">Facebook</a> · <a href="#">Twitter</a> · <a href="#">LinkedIn</a> · <a href="#">Copy link</a>
+    </section>
+
+    <section class="related-posts">
+      <h2>Related Posts</h2>
+      <div class="related-carousel">
+        <article class="card"><div class="card-img" aria-hidden="true"></div><p>Post A</p></article>
+        <article class="card"><div class="card-img" aria-hidden="true"></div><p>Post B</p></article>
+        <article class="card"><div class="card-img" aria-hidden="true"></div><p>Post C</p></article>
+      </div>
+    </section>
+
+    <section class="comments">
+      <h2>Comments</h2>
+      <form>
+        <label>Name<div><input type="text" name="name"></div></label>
+        <label>Email<div><input type="email" name="email"></div></label>
+        <label>Comment<div><textarea name="comment" rows="4"></textarea></div></label>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </section>
+  </article>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="social">Facebook • Twitter • LinkedIn</div>
+      <p>© 2026 Oriana</p>
+    </div>
+  </footer>
+</body>
+</html>
