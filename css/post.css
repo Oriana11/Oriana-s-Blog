@@ -149,6 +149,9 @@
   background: linear-gradient(135deg, #334, #112);
   border-radius: 8px;
   margin-bottom: 0.6rem;
+  width: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .related-carousel .card p {
