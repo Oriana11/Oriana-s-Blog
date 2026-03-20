@@ -167,7 +167,7 @@ function debounce(fn, ms) {
 
   function start() {
     resize();
-    if (canvas.width === 0) {
+    if (canvas.width === 0 || canvas.height === 0) {
       requestAnimationFrame(start);
       return;
     }
@@ -175,5 +175,12 @@ function debounce(fn, ms) {
     setInterval(draw, 45);
   }
 
-  requestAnimationFrame(start);
+  /* Wait for full page load so all CSS (and thus hero dimensions) are applied
+     before we measure the canvas. On GitHub Pages the network latency can cause
+     the hero's min-height to be unresolved on the first rAF tick. */
+  if (document.readyState === 'complete') {
+    requestAnimationFrame(start);
+  } else {
+    window.addEventListener('load', () => requestAnimationFrame(start));
+  }
 })();
