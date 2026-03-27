@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Day 3 at ReDI: Wireshark Deep Dive &amp; The Protocol Zoo – Cyberstack Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code:wght@400;500;700&family=Montserrat:wght@700&display=optional" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/post.css">
+</head>
+<body>
+  <header class="site-nav">
+    <a class="nav-brand" href="../index.html">Cyberstack Blog</a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../index.html#featured">Posts</a>
+      <a href="../about.html">About</a>
+    </nav>
+    <button class="menu-toggle" aria-label="Open menu">☰</button>
+  </header>
+
+  <article class="post-article">
+    <section class="post-header">
+      <h1>Day 3 at ReDI: Wireshark Deep Dive &amp; The Protocol Zoo</h1>
+      <p class="post-meta">By Oriana • Mar 27 2026 • 10 min read •
+        <a href="../index.html?filter=networking">#networking</a>
+        <a href="../index.html?filter=security">#security</a>
+        <a href="../index.html?filter=journey">#journey</a>
+        <a href="../index.html?filter=redi">#ReDI</a>
+      </p>
+    </section>
+
+    <section class="post-hero">
+      <img src="../../images/analysis.png" alt="Network packet analysis with Wireshark">
+    </section>
+
+    <section class="post-content">
+      <p>Day three of the ReDI Cybersecurity course and it was one of the most packed sessions yet — Wireshark front and centre, surrounded by a parade of protocols spanning every layer of the stack. Protocols I had only ever read about were suddenly right there in front of me, dissected packet by packet. Seeing it all <em>live</em>, in real captured traffic, was something else entirely. This post is my attempt to make sense of everything we covered, with some reflections on what surprised me and what I'm still turning over in my head.</p>
+
+      <h2>Wireshark — Reading the Wire</h2>
+      <p>Wireshark is a free, open-source packet analyser — arguably the most important tool in a network security analyst's kit. It captures all traffic passing through a network interface and lets you dissect it layer by layer, right down to the raw bytes. Think of it as a microscope for network communication.</p>
+      <p>What makes Wireshark so powerful for security work is that it doesn't lie. Logs can be manipulated, firewalls can be misconfigured, but a raw packet capture shows you exactly what travelled across the wire. If something is wrong, the truth is in there.</p>
+
+      <h3>Key Wireshark skills we practised</h3>
+      <ul>
+        <li><strong>Capture filters</strong> — limit what Wireshark records at capture time (e.g. <code>port 80</code>, <code>host 192.168.1.1</code>). These reduce file size and noise.</li>
+        <li><strong>Display filters</strong> — applied after capture to narrow what you see (e.g. <code>http</code>, <code>dns</code>, <code>tcp.flags.syn == 1</code>). This is where analysis happens.</li>
+        <li><strong>Following streams</strong> — right-click a TCP or HTTP packet and follow the full conversation to see reconstructed data — useful for spotting plaintext credentials in HTTP or FTP.</li>
+        <li><strong>Protocol colouring</strong> — Wireshark colour-codes traffic by protocol, making anomalies stand out at a glance.</li>
+      </ul>
+
+      <h2>DHCP — Dynamic Host Configuration Protocol</h2>
+      <p>DHCP is the protocol that automatically assigns IP addresses to devices when they join a network. Without it, every device would need a manually configured IP — fine for servers, impractical for hundreds of laptops and phones.</p>
+      <p>The DHCP exchange follows a four-step handshake called <strong>DORA</strong>:</p>
+      <ol>
+        <li><strong>Discover</strong> — the client broadcasts "I need an IP address, anyone there?"</li>
+        <li><strong>Offer</strong> — a DHCP server responds with a proposed IP and lease time.</li>
+        <li><strong>Request</strong> — the client says "Yes, I'll take that IP."</li>
+        <li><strong>Acknowledge</strong> — the server confirms the assignment.</li>
+      </ol>
+      <p>In Wireshark, looking at DHCP traffic reveals a massive amount of information: the client hostname, MAC address, requested lease duration, and the assigned gateway and DNS servers. That last point is security-relevant — a rogue DHCP server can hand out a malicious DNS server address and redirect all your traffic. This attack is called <strong>DHCP spoofing</strong> and it requires no authentication to pull off on most networks.</p>
+
+      <h2>ARP — Address Resolution Protocol</h2>
+      <p>ARP bridges the gap between Layer 3 (IP addresses) and Layer 2 (MAC addresses). When a device wants to send a packet to an IP on the same subnet, it broadcasts an ARP request: "Who has 192.168.1.10? Tell me your MAC address." The owner replies with its MAC, the sender caches the result, and communication proceeds.</p>
+      <p>ARP is famously insecure. There is no authentication — any device can broadcast a fake ARP reply and poison the cache of other hosts. This is how <strong>ARP spoofing</strong> (or ARP poisoning) works, enabling man-in-the-middle attacks on a local network. An attacker inserts themselves in the path between two hosts, relaying traffic while reading or modifying it. Wireshark makes this attack trivially visible: you'll see gratuitous ARP packets being sent that weren't requested by anyone.</p>
+
+      <h2>ECMP — Equal-Cost Multi-Path Routing</h2>
+      <p>ECMP is a network routing strategy that allows traffic to be distributed across multiple paths that have the same routing cost. Instead of sending everything down one link and keeping others as standby, ECMP sends traffic across all equally-good paths simultaneously — improving throughput and resilience.</p>
+      <p>From a security perspective, ECMP creates a challenge for monitoring: a single TCP flow's packets might travel via different physical paths. This means packet captures at a single point might only see part of the conversation, complicating analysis. It also means intrusion detection systems sitting on one path might miss half the traffic.</p>
+
+      <h2>Routing &amp; Routing Protocols</h2>
+      <p>Routing is how packets find their path across networks. Routers consult their routing tables — built either manually (static routes) or dynamically by routing protocols. Key protocols include:</p>
+      <ul>
+        <li><strong>RIP (Routing Information Protocol)</strong> — older, simple, uses hop count as metric. Slow to converge. Rarely used today.</li>
+        <li><strong>OSPF (Open Shortest Path First)</strong> — link-state protocol, builds a full topology map, fast convergence. Common in enterprise networks.</li>
+        <li><strong>BGP (Border Gateway Protocol)</strong> — the routing protocol of the internet. It connects autonomous systems (ISPs, cloud providers). BGP hijacking — where a bad actor announces false routes — is one of the most impactful attacks on internet infrastructure.</li>
+      </ul>
+
+      <h2>NAT — Network Address Translation &amp; Security Concerns</h2>
+      <p>NAT allows many devices using private IP addresses (e.g. 192.168.x.x) to share a single public IP when communicating with the internet. The router keeps a translation table mapping internal connections to external ones.</p>
+      <p>NAT has a side-effect that is sometimes mistaken for security: it hides internal IP addresses from the outside world. But this is not a firewall. NAT doesn't filter traffic — a firewall does. Relying on NAT for security instead of explicit firewall rules is a common and dangerous misconception. Additionally, for forensic investigations, NAT can complicate attribution because many internal hosts share the same public IP — you need timestamps and port numbers to trace back to a specific device.</p>
+
+      <h2>DNS — Domain Name System</h2>
+      <p>DNS is the internet's phonebook. When you type <code>google.com</code>, a DNS query goes out, and the response comes back with an IP address your device can route to. The DNS hierarchy flows from root servers → TLD servers (e.g. <code>.com</code>) → authoritative servers for the domain.</p>
+      <p>DNS is a prime target for attackers:</p>
+      <ul>
+        <li><strong>DNS spoofing / cache poisoning</strong> — injecting fake DNS responses into a resolver's cache, redirecting users to malicious sites.</li>
+        <li><strong>DNS tunnelling</strong> — encoding data inside DNS queries and responses to exfiltrate data from a network, even through firewalls that only allow DNS traffic.</li>
+        <li><strong>DNS over HTTPS (DoH)</strong> — encrypts DNS traffic to prevent interception, but also makes it harder for defenders to monitor for suspicious lookups.</li>
+      </ul>
+      <p>In Wireshark, DNS traffic is incredibly revealing — you can see every domain a device is querying, which builds a detailed picture of browsing habits and installed software.</p>
+
+      <h2>Whois — The Domain Registry Database</h2>
+      <p>Whois is a public database that stores registration information for domain names and IP address blocks: who registered a domain, when, the registrar used, and often contact details. It is a foundational OSINT (Open Source Intelligence) tool in cybersecurity — used in threat investigation to identify who owns a suspicious domain or IP range.</p>
+      <p>Privacy-focused registrars now mask personal details through proxy services (e.g. "Privacy Protect LLC" instead of a real name), which limits how useful Whois is for attribution. But bulk registrations of similar-sounding domains, or recently registered domains with suspicious patterns, still yield useful signals.</p>
+
+      <h2>HTTP and HTTPS</h2>
+      <p>HTTP (HyperText Transfer Protocol) is the foundation of data communication on the web. It defines how clients (browsers) request resources and how servers respond. An HTTP exchange is entirely plaintext — every header, cookie, form field, and response body is readable to anyone on the network.</p>
+      <p>HTTPS is HTTP wrapped in TLS encryption. The content is encrypted — but metadata (source, destination IP, timing, volume of traffic) is still visible, which is enough for traffic analysis even without decrypting the payload.</p>
+
+      <h3>HTTP Protocol Versions</h3>
+      <ul>
+        <li><strong>HTTP/1.0</strong> — one request per connection. Inefficient — a new TCP handshake for every resource.</li>
+        <li><strong>HTTP/1.1</strong> — introduced persistent connections and pipelining. Still widely used. Vulnerable to head-of-line blocking.</li>
+        <li><strong>HTTP/2</strong> — binary protocol, multiplexing over a single TCP connection, header compression (HPACK). Much faster but still TCP-dependent.</li>
+        <li><strong>HTTP/3</strong> — runs over QUIC (UDP-based). Eliminates TCP head-of-line blocking entirely. The future of the web.</li>
+      </ul>
+      <p>In Wireshark, HTTP/1 traffic is trivially readable. HTTP/2 is binary but Wireshark decodes it. HTTP/3 and QUIC over UDP require specific dissectors and are harder to analyse, which creates monitoring blind spots.</p>
+
+      <h2>FTP &amp; Secure File Transfer Protocols</h2>
+      <p>FTP (File Transfer Protocol) is one of the oldest protocols on the internet. It transfers files between a client and a server — in completely plaintext. Username, password, and all file contents travel unencrypted. In Wireshark, you can literally follow an FTP stream and read everything.</p>
+      <p>Secure alternatives exist and should be used instead:</p>
+      <ul>
+        <li><strong>SFTP (SSH File Transfer Protocol)</strong> — runs over SSH. Everything is encrypted end-to-end.</li>
+        <li><strong>FTPS (FTP Secure)</strong> — FTP with TLS added. Two modes: Explicit (STARTTLS) and Implicit.</li>
+        <li><strong>SCP (Secure Copy Protocol)</strong> — simpler file copy over SSH. Fine for scripts and automation.</li>
+      </ul>
+      <p><em>Reflection:</em> If you still have FTP exposed anywhere and someone is running Wireshark on your network, your credentials are already gone. The moment you see FTP in a production environment, it should be treated as a critical finding.</p>
+
+      <h2>Email Protocols</h2>
+      <p>Email infrastructure involves a handful of protocols working together:</p>
+      <ul>
+        <li><strong>SMTP (Simple Mail Transfer Protocol)</strong> — sends mail from client to server and between servers. Port 25 (server-to-server), 587 (submission), 465 (SMTPS).</li>
+        <li><strong>IMAP (Internet Message Access Protocol)</strong> — retrieves mail from a server while keeping it there. Multiple devices can sync the same mailbox.</li>
+        <li><strong>POP3 (Post Office Protocol v3)</strong> — downloads mail and typically deletes it from the server. Less common now.</li>
+      </ul>
+      <p>Email is also a primary attack vector. SMTP has no built-in authentication of the sender — that's why spam and phishing exist. Modern email security relies on <strong>SPF</strong>, <strong>DKIM</strong>, and <strong>DMARC</strong> to validate senders and detect spoofed messages. In Wireshark, unencrypted SMTP traffic reveals not just metadata but often the full email content.</p>
+
+      <h2>TLS — Transport Layer Security</h2>
+      <p>TLS is the cryptographic protocol that secures almost all modern internet traffic. It provides confidentiality (encryption), integrity (MAC), and authentication (certificates). It replaced SSL (which is now deprecated and insecure).</p>
+      <p>A TLS handshake involves:</p>
+      <ol>
+        <li>Client hello — cipher suites and TLS version offered.</li>
+        <li>Server hello — cipher selected, certificate sent.</li>
+        <li>Certificate verification — client validates the server's identity.</li>
+        <li>Key exchange — session keys generated.</li>
+        <li>Finished — encrypted communication begins.</li>
+      </ol>
+      <p>In Wireshark, you can see the full TLS handshake in plaintext (it hasn't started encrypting yet at that point), which reveals the TLS version used, the negotiated cipher suite, and the server certificate. This is valuable for identifying outdated TLS versions (1.0, 1.1) or weak cipher suites.</p>
+
+      <h2>SSH — Secure Shell</h2>
+      <p>SSH is the standard protocol for encrypted remote access to servers. It replaced Telnet (which sent everything in plaintext) and provides a secure encrypted channel for command execution, tunnelling, and port forwarding.</p>
+      <p>In Wireshark, SSH traffic shows the connection and handshake metadata but not the content — it's encrypted. However, you can still learn things: connection timing, session duration, data volume. Unusually large SSH transfers in the middle of the night are a red flag worth investigating even if the content is encrypted.</p>
+      <p>SSH keys are also a significant attack surface. Compromised or misconfigured SSH keys (especially those with no passphrase, left on shared systems) are a common initial access vector.</p>
+
+      <h2>SSL — Secure Sockets Layer</h2>
+      <p>SSL is the predecessor to TLS. SSL 2.0 and 3.0 are both deprecated with known critical vulnerabilities (POODLE, DROWN). Any system still advertising SSL in a Wireshark capture should be treated as a vulnerability. The industry standard is TLS 1.2 at minimum, with TLS 1.3 strongly preferred.</p>
+      <p>The terms "SSL" and "TLS" are still used interchangeably in common speech (SSL certificate, SSL termination) even though technically the protocol is TLS. Worth knowing the difference when talking to security professionals.</p>
+
+      <h2>VPN — Virtual Private Network</h2>
+      <p>A VPN creates an encrypted tunnel between a client and a VPN server, hiding traffic from anyone between the two. VPNs are used for remote work (connecting to a corporate network), privacy (hiding traffic from ISPs), and bypassing geographic restrictions.</p>
+      <p>From a security monitoring perspective, VPNs are a double-edged sword. They protect legitimate users on hostile networks (e.g. public Wi-Fi), but attackers also use them to mask their true IP address and origin. In Wireshark, VPN traffic appears as encrypted blobs to the VPN endpoint — the destinations inside the tunnel are hidden. Corporate VPN deployments often use split tunnelling, where only corporate traffic goes through the VPN — understanding this topology matters for monitoring coverage.</p>
+
+      <h2>TCP — Transmission Control Protocol</h2>
+      <p>TCP is the reliable, connection-oriented transport protocol. It guarantees delivery, ordering, and error checking via a three-way handshake (SYN → SYN-ACK → ACK) before data flows. Every byte sent is acknowledged.</p>
+      <p>In Wireshark, TCP gives you:</p>
+      <ul>
+        <li><strong>SYN scans</strong> — a flood of SYN packets without follow-up ACKs is a textbook port scan or SYN flood DDoS attempt.</li>
+        <li><strong>RST packets</strong> — connection resets, potentially indicating a firewall blocking traffic or a host refusing connections.</li>
+        <li><strong>Retransmissions</strong> — signs of packet loss or network instability.</li>
+        <li><strong>Flow analysis</strong> — who is talking to whom, how often, how much data.</li>
+      </ul>
+
+      <h2>UDP — User Datagram Protocol</h2>
+      <p>UDP is the fire-and-forget protocol. No handshake, no acknowledgements, no guaranteed delivery. What you gain is speed and low overhead — ideal for DNS, streaming video, VoIP, and online gaming where a dropped packet is better than a delayed one.</p>
+      <p>UDP is also abused in <strong>UDP amplification attacks</strong> — a class of DDoS attack where an attacker spoof the victim's IP and sends small UDP requests to open servers (DNS, NTP, Memcached) that respond with much larger replies. The victim is flooded with amplified traffic it never requested.</p>
+
+      <h2>QUIC Protocol</h2>
+      <p>QUIC (Quick UDP Internet Connections) is a modern transport protocol developed by Google and standardised by the IETF. It runs over UDP but adds reliability, multiplexing, and built-in TLS 1.3 encryption. HTTP/3 is built on top of QUIC.</p>
+      <p>QUIC eliminates the round-trip delays of TCP handshakes and TLS negotiation by combining them — a connection can be established in a single round trip (or zero for returning users). This makes web applications noticeably faster, especially on lossy mobile connections.</p>
+      <p>For security analysts, QUIC presents monitoring challenges: it's encrypted by default, runs on UDP (which many firewalls don't filter as aggressively as TCP), and its connection IDs can be used to migrate across network changes. Many enterprise environments block QUIC and force browsers to fall back to HTTP/2 over TCP specifically because of these monitoring limitations.</p>
+
+      <h2>ICMP — Internet Control Message Protocol</h2>
+      <p>ICMP is the diagnostic protocol of IP networks — it's what <code>ping</code> uses. ICMP carries error messages (destination unreachable, TTL exceeded) and informational messages between network devices. It operates at Layer 3 alongside IP and has no port numbers.</p>
+      <p>Security relevance: ICMP is used in network reconnaissance (ping sweeps to discover live hosts) and in <strong>ICMP tunnelling</strong>, where data is hidden inside ICMP payloads to bypass firewalls that allow ping traffic. A simple Wireshark filter of <code>icmp</code> can reveal whether someone is actively probing your network.</p>
+
+      <h2>SCTP — Stream Control Transmission Protocol</h2>
+      <p>SCTP is a transport-layer protocol that shares properties of both TCP and UDP — it provides reliable, ordered delivery like TCP but supports multiple streams within a single connection (multi-streaming) and multiple network paths simultaneously (multi-homing). It's commonly used in telephony signalling (SS7 over IP) and some VoIP infrastructure.</p>
+      <p>SCTP is rarely seen in typical enterprise or web traffic, which is exactly why it sometimes slips past security monitoring tools that are tuned for TCP and UDP. If you see SCTP in a Wireshark capture in an unexpected environment, it warrants investigation.</p>
+
+      <h2>Reflections on the Class</h2>
+      <p>What struck me most about today was the sheer number of protocols that are still in use despite being fundamentally insecure by design — FTP, plain HTTP, SMTP without encryption, SSL. These weren't designed with attackers in mind because they were built in an era where networks were assumed to be trusted. That assumption is long dead, but the protocols are still running.</p>
+      <p>Wireshark makes this viscerally real. It's one thing to read that "FTP sends credentials in plaintext." It's another thing to click "Follow TCP Stream" and watch a complete login session appear in a pop-up window. I think every developer and network engineer should spend at least a few hours in Wireshark before ever making decisions about what protocols to deploy or what traffic to trust.</p>
+      <p>I also found myself thinking about defence in layers. No single protocol is perfectly secure in isolation — TLS doesn't help if the certificate authority is compromised; SSH doesn't help if the key pair is leaked; HTTPS doesn't help if the DNS response was poisoned before the connection was made. Security is always a stack of mitigations, not a single silver bullet.</p>
+      <p>The other thing I'm taking away: the gap between legacy protocols (FTP, HTTP/1, SSL) and modern ones (QUIC, TLS 1.3, SFTP) isn't just about performance. It's about what a defender can see, what an attacker can exploit, and what it costs to migrate. In many real-world environments, that migration cost is what keeps insecure protocols alive long past their expiry date — and that gap is exactly where attackers live.</p>
+
+      <h2>Summary</h2>
+      <p>We covered an enormous amount of ground today. Here's the one-line takeaway for each protocol:</p>
+      <ul>
+        <li><strong>Wireshark</strong> — see everything; truth is in the packets.</li>
+        <li><strong>DHCP</strong> — auto-assigns IPs; rogue servers can redirect all traffic.</li>
+        <li><strong>ARP</strong> — maps IPs to MACs; no authentication, trivially spoofed.</li>
+        <li><strong>ECMP</strong> — load balances across multiple paths; complicates monitoring.</li>
+        <li><strong>Routing / BGP / OSPF</strong> — gets packets across networks; BGP hijacking is catastrophic.</li>
+        <li><strong>NAT</strong> — hides internal IPs; not a firewall, don't treat it as one.</li>
+        <li><strong>DNS</strong> — translates names to IPs; prime target for poisoning and tunnelling.</li>
+        <li><strong>Whois</strong> — public domain registry; useful OSINT, increasingly privacy-masked.</li>
+        <li><strong>HTTP / HTTPS</strong> — web protocol; always use HTTPS, inspect TLS version and ciphers.</li>
+        <li><strong>HTTP versions</strong> — HTTP/3 + QUIC is the future; older versions create blind spots.</li>
+        <li><strong>FTP</strong> — plaintext file transfer; replace with SFTP or FTPS immediately.</li>
+        <li><strong>Email (SMTP/IMAP)</strong> — authenticate with SPF, DKIM, DMARC or get spoofed.</li>
+        <li><strong>TLS</strong> — encrypt everything; use 1.2 minimum, 1.3 preferred.</li>
+        <li><strong>SSL</strong> — deprecated and broken; flag it wherever you see it.</li>
+        <li><strong>SSH</strong> — encrypted remote access; secure the keys, not just the password.</li>
+        <li><strong>VPN</strong> — encrypts tunnels; useful for users, also used by attackers to hide.</li>
+        <li><strong>TCP</strong> — reliable, ordered delivery; SYN floods and RST storms are red flags.</li>
+        <li><strong>UDP</strong> — fast, no guarantees; abused in amplification DDoS attacks.</li>
+        <li><strong>QUIC</strong> — next-gen, encrypted by default; monitoring challenges for defenders.</li>
+        <li><strong>ICMP</strong> — diagnostic messages; used in ping sweeps and ICMP tunnelling.</li>
+        <li><strong>SCTP</strong> — multi-stream, multi-homed; rare, but investigate if unexpected.</li>
+      </ul>
+    </section>
+  </article>
+
+  <footer>
+    <div class="footer-inner">
+      <p>© 2026 Oriana</p>
+      <div class="social-links">
+        <a href="https://github.com/Oriana11" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/oriana-c-29976474/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <button id="back-to-top" hidden aria-label="Back to top">↑</button>
+  <script src="../../js/script.js"></script>
+</body>
+</html>
