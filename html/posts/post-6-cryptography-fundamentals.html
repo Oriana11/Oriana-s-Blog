@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Day 4 at ReDI: Keys, Ciphers &amp; Proofs — Cryptography Fundamentals – Cyberstack Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code:wght@400;500;700&family=Montserrat:wght@700&display=optional" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/post.css">
+</head>
+<body>
+  <header class="site-nav">
+    <a class="nav-brand" href="../index.html">Cyberstack Blog</a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../index.html#featured">Posts</a>
+      <a href="../about.html">About</a>
+    </nav>
+    <button class="menu-toggle" aria-label="Open menu">☰</button>
+  </header>
+
+  <article class="post-article">
+    <section class="post-header">
+      <h1>Day 4 at ReDI: Keys, Ciphers &amp; Proofs — A Deep-Dive into Cryptography Fundamentals</h1>
+      <p class="post-meta">By Oriana • Apr 12 2026 • 11 min read •
+        <a href="../index.html?filter=security">#security</a>
+        <a href="../index.html?filter=cryptography">#cryptography</a>
+        <a href="../index.html?filter=journey">#journey</a>
+        <a href="../index.html?filter=redi">#ReDI</a>
+      </p>
+    </section>
+
+    <section class="post-hero">
+      <img src="../../images/Cryptographymain.png" alt="Cryptography and encryption concepts">
+    </section>
+
+    <section class="post-content">
+      <p>Day 4 turned out to be a genuinely engaging session — the energy in the room was great and the enthusiasm for the material came through clearly. Cryptography is one of those subjects where my conviction has always been that mathematics is the foundation of everything, and this session confirmed it in the most satisfying way possible. Seeing number theory and probability woven into the systems that protect real-world communications is precisely what makes this field so fascinating. Here is everything we covered, with some thoughts on what hit hardest.</p>
+
+      <h2>Where Theory Meets Practice in Modern Security</h2>
+      <p>Today's session on cryptography fundamentals was an excellent blend of theoretical foundations and hands-on application. The curriculum covered a comprehensive range of topics that provided both historical context and modern applications of cryptographic principles.</p>
+
+      <h2>Classical Cryptography — Where It All Started</h2>
+      <p>We began with classic cryptography, exploring cryptosystems through Caesar ciphers and learning practical attack methods against these historical encryption techniques. The mathematical representations of these systems provided a solid foundation for understanding more complex algorithms.</p>
+      <p>There is something satisfying about starting here — not just because the Caesar cipher is elegant in its simplicity, but because understanding <em>how it breaks</em> is what makes everything that comes next make sense. Watching frequency analysis and brute-force dismantle something that once seemed secure is a surprisingly powerful way to build intuition for what comes next.</p>
+
+      <h2>Transposition Ciphers — Rearranging the Message</h2>
+      <p>The transposition cipher section was particularly engaging, especially the columnar transposition exercises. Working through both implementation and attack vectors gave valuable insight into the vulnerabilities of classical cryptographic methods. Understanding how these systems can be compromised is crucial for appreciating why modern cryptography evolved as it did.</p>
+      <p>I found the columnar transposition exercises genuinely fun — there is a puzzle quality to them that played to my problem-solving instincts. But the more interesting realisation was how quickly they fall apart once an attacker knows the plaintext length or can identify repeated structures. Classical ciphers feel almost fragile once you understand the tools against them.</p>
+
+      <h2>The Bridge to Modern Cryptography — OTPs and DES</h2>
+      <img src="../../images/cryptography.png" alt="Cryptography concepts and key exchange" style="width:100%;border-radius:8px;margin:1rem 0 1.5rem;">
+      <p>The transition to modern cryptography introduced proof of security concepts and the elegant simplicity of one-time pads. We then explored the Data Encryption Standard (DES), which bridged the gap between classical and modern encryption methods.</p>
+      <p>One-time pads fascinated me. Theoretically unbreakable — if, and only if, the key is truly random, at least as long as the message, and never reused. That last condition is everything. The history of broken OTP schemes is basically a history of people reusing keys and paying the price for it. DES arriving from there made sense: it was the practical answer to the impossibility of distributing truly random key material at scale.</p>
+
+      <h2>Symmetric Encryption and Diffie-Hellman</h2>
+      <p>The symmetric encryption module covered essential concepts before diving into the Diffie-Hellman key exchange — a foundational protocol that enables secure key establishment over insecure channels.</p>
+      <p>Diffie-Hellman was one of those moments where I genuinely had to pause and appreciate what I was looking at. The idea that two parties can establish a shared secret over a completely public channel — with an eavesdropper watching every message — feels like it should be impossible. The discrete logarithm problem is doing all the heavy lifting, and seeing the maths walk through it step by step made the concept click in a way no description ever had before.</p>
+
+      <h2>Asymmetric Encryption and RSA</h2>
+      <p>This naturally led to asymmetric encryption and an in-depth look at RSA, one of the most widely-used public key cryptosystems. Understanding the central principles of modern cryptography through practical encryption and decryption exercises reinforced the theoretical concepts. The hands-on approach made complex mathematical principles more accessible and memorable.</p>
+      <p>Encrypting a message by hand with RSA — working through the modular arithmetic — demystified something I had always treated as a black box. It is still mathematically intense, but the structure is beautiful: the security of the whole thing rests on the hardness of factoring large integers. It is almost philosophical. We are betting the security of global communications on a problem nobody has managed to solve efficiently in decades.</p>
+
+      <h2>Cryptographic Hash Functions and Digital Signatures</h2>
+      <p>The session concluded with advanced topics including cryptographic hash functions, digital signatures, and practical certificate inspection. Seeing these concepts applied — inspecting real TLS certificates, verifying signatures — brought together everything from the earlier modules into a coherent picture of how trust is actually established on the internet.</p>
+      <p>Hash functions were the piece that finally made me understand why password storage works the way it does, why git commits have those long hex strings, and why certificate pinning is a thing. Digital signatures then tied it all together: asymmetric keys plus hashing equals non-repudiation. When a server presents a certificate, this entire chain — RSA, SHA, CA signatures — is running in the background in milliseconds.</p>
+
+      <h2>The Frontier — ZKPs, MPC, and Homomorphic Encryption</h2>
+      <p>We also touched on cutting-edge areas like zero-knowledge proofs, secure multiparty computation, and homomorphic encryption — topics that represent the frontier of cryptographic research and application.</p>
+      <p>Zero-knowledge proofs were the concept that genuinely kept me thinking on the commute home. The ability to prove you know something without revealing what you know — the classic "I can prove I know the password without ever sending the password" — has enormous implications for privacy-preserving systems. Homomorphic encryption, the ability to compute on encrypted data without decrypting it, sounds almost too good to be true. The fact that it is real and being actively deployed in healthcare and finance is something I want to dig into much further.</p>
+
+      <h2>What Made This Session Stick</h2>
+      <p>What made this learning experience particularly valuable was the progressive structure — each concept built logically on the previous one, creating a comprehensive understanding of how cryptographic systems protect our digital world. The interactive exercises transformed abstract mathematical concepts into tangible skills.</p>
+      <p>The field of cryptography perfectly balances theoretical elegance with practical necessity, making it both intellectually stimulating and immediately relevant to today's cybersecurity challenges.</p>
+      <p>Walking out of this session, I could finally see the full chain: classical ciphers exposed the need for rigorous security proofs; OTPs showed what perfect secrecy looks like in theory; DES and symmetric ciphers delivered practicality; Diffie-Hellman and RSA made public-key cryptography possible; hash functions and signatures built the trust infrastructure the internet runs on. That progression — from Caesar to zero-knowledge proofs — in a single day, felt remarkable. Cryptography is not just a security tool. It is the mathematical language in which trust is written.</p>
+    </section>
+
+    <section class="post-share">
+      <span>Share:</span>
+      <a href="#">Twitter</a> ·
+      <a href="#">LinkedIn</a> ·
+      <a href="#">Copy link</a>
+    </section>
+
+    <section class="related-posts">
+      <h2>Related Posts</h2>
+      <div class="related-carousel">
+        <article class="card">
+          <img class="card-img" src="../../images/analysis.png" alt="Day 3 Wireshark">
+          <p><a href="post-5-wireshark-and-protocols.html">Day 3: Wireshark &amp; The Protocol Zoo</a></p>
+        </article>
+        <article class="card">
+          <img class="card-img" src="../../images/network.png" alt="Day 2 Networking">
+          <p><a href="post-3-networking-fundamentals.html">Day 2: Networking Fundamentals</a></p>
+        </article>
+        <article class="card">
+          <img class="card-img" src="../../images/cybersecurityhero.PNG" alt="Red Team Blue Team">
+          <p><a href="post-4-red-team-blue-team-certifications.html">Red Team, Blue Team &amp; Certifications</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="comments">
+      <h2>Comments</h2>
+      <script src="https://giscus.app/client.js"
+        data-repo="Oriana11/Oriana-s-Blog"
+        data-repo-id="R_kgDORsEo3Q"
+        data-category="Announcements"
+        data-category-id="DIC_kwDORsEo3c4C42jN"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="dark"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+      </script>
+    </section>
+  </article>
+
+  <footer>
+    <div class="footer-inner">
+      <p>© 2026 Oriana</p>
+      <div class="social-links">
+        <a href="https://github.com/Oriana11" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/oriana-c-29976474/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <button id="back-to-top" hidden aria-label="Back to top">↑</button>
+  <script src="../../js/script.js"></script>
+</body>
+</html>
