@@ -185,6 +185,10 @@
   color: var(--color-primary);
 }
 
+.post-card:hover h3 {
+  color: var(--color-primary);
+}
+
 /* --- Posts toolbar: search + filter chips --- */
 
 .posts-toolbar {
