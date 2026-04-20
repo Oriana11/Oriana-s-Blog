@@ -101,12 +101,15 @@
 
 .posts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: 1.4rem 1.6rem;
   margin-top: 1rem;
 }
 
 .post-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
   background: var(--color-bg);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
@@ -122,10 +125,10 @@
 
 .post-img {
   width: 100%;
-  min-height: 140px;
+  aspect-ratio: 16 / 9;
   background: linear-gradient(135deg, #334, #112);
   border-radius: 8px;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.25rem;
   object-fit: cover;
   display: block;
 }
@@ -135,12 +138,14 @@
 }
 
 .post-card p {
-  margin: 0.3rem 0 0.8rem;
+  margin: 0.2rem 0 0;
   color: var(--color-muted);
   font-size: 0.95rem;
 }
 
 .post-card .read-more {
+  margin-top: auto;
+  padding-top: 0.4rem;
   color: var(--color-primary);
   font-weight: var(--fw-bold);
   text-decoration: none;

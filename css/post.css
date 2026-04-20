@@ -133,10 +133,30 @@
   overflow-x: auto;
   padding: 0.5rem 0 1rem;
   scrollbar-width: thin;
+  scrollbar-color: rgba(0, 255, 234, 0.35) rgba(255, 255, 255, 0.05);
+}
+
+.related-carousel::-webkit-scrollbar {
+  height: 6px;
+}
+
+.related-carousel::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.related-carousel::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 234, 0.35);
+  border-radius: 4px;
+}
+
+.related-carousel::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 234, 0.55);
 }
 
 .related-carousel .card {
-  min-width: 220px;
+  width: 280px;
+  min-width: 280px;
   background: var(--color-surface);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
