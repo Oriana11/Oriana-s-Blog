@@ -315,3 +315,8 @@ nav a:hover {
   }
 }
 
+/* Ensure the hidden attribute always works, even on flex/grid elements */
+[hidden] {
+  display: none !important;
+}
+

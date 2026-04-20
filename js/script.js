@@ -60,6 +60,17 @@ function debounce(fn, ms) {
 
   let activeFilter = 'all';
 
+  /* Read ?filter= from URL (used by tag links on post pages) */
+  const urlFilter = new URLSearchParams(window.location.search).get('filter');
+  if (urlFilter) {
+    activeFilter = urlFilter.toLowerCase();
+    chips.forEach((c) => {
+      const isMatch = c.dataset.filter === activeFilter;
+      c.classList.toggle('active', isMatch);
+      c.setAttribute('aria-pressed', String(isMatch));
+    });
+  }
+
   function applyFilters() {
     const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
     let visible = 0;
@@ -67,9 +78,9 @@ function debounce(fn, ms) {
     cards.forEach((card) => {
       const title   = (card.querySelector('h3')?.textContent ?? '').toLowerCase();
       const excerpt = (card.querySelector('p')?.textContent  ?? '').toLowerCase();
-      const tags    = card.dataset.tags ?? '';
+      const tags    = (card.dataset.tags ?? '').toLowerCase();
 
-      const matchesSearch = !query || title.includes(query) || excerpt.includes(query);
+      const matchesSearch = !query || title.includes(query) || excerpt.includes(query) || tags.includes(query);
       const matchesFilter = activeFilter === 'all' || tags.split(' ').includes(activeFilter);
 
       card.hidden = !(matchesSearch && matchesFilter);
@@ -78,6 +89,9 @@ function debounce(fn, ms) {
 
     if (noResults) noResults.hidden = visible > 0;
   }
+
+  /* Run once on load to apply any URL filter */
+  applyFilters();
 
   if (searchInput) {
     searchInput.addEventListener('input', debounce(applyFilters, 200));

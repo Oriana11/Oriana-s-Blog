@@ -58,11 +58,26 @@
   margin: 1.5rem 0;
 }
 
+.featured-post:hover {
+  background: rgba(0, 255, 234, 0.1);
+  box-shadow: 0 0 0 1px rgba(0, 255, 234, 0.4);
+}
+
 .featured-post article {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
   gap: 1.5rem;
   align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.featured-copy h2 a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
 }
 
 .featured-img {
@@ -101,7 +116,7 @@
 
 .posts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
   gap: 1.4rem 1.6rem;
   margin-top: 1rem;
 }
