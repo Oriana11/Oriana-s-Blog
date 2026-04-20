@@ -40,7 +40,8 @@
       <h2>The Digital Doorbell</h2>
       <p>Think about when someone rings your doorbell. You ask "Who is it?" — that's identification. You look through the peephole — that's authentication. And you decide whether to let them all the way in or just to the door — that's authorization. Every login works the same way, just in milliseconds.</p>
       <p>Most of the time when we log in, we use two factors — a password plus a code sent to our phone. That's Two-Factor Authentication (2FA). But some systems go further and stack a third layer, like a fingerprint on top of that. The more factors required, the harder it is for someone else to get in — that's the idea behind Multi-Factor Authentication (MFA).</p>
-      <p>Behind every login button is someone who wants their photos, messages, and work to stay private. And behind the scenes, a system is instantly deciding not just whether your password is correct, but whether you are allowed to see what you are asking for.</p>
+      <p>But how does the system actually know it's really you? It never stores your password directly — instead it keeps a scrambled version of it called a hash. When you log in, it scrambles what you type and checks if they match. For a one-time code, it verifies the code is valid and hasn't expired. For a fingerprint, it compares your scan against the one saved on your device. If everything checks out, access is granted. If anything looks off — wrong password, expired code, unrecognised device — the system blocks it.</p>
+      <p>Behind every login there is a person who wants their photos, messages, and work to stay private. And in that same moment, the system is making two decisions at once: are you who you say you are, and are you actually allowed to see what you're asking for?</p>
 
       <img src="../../images/iaminfographic.png" alt="IAM infographic: identification, authentication and authorization" style="width:80%;display:block;margin:1.5rem auto 2rem;border-radius:8px;">
 
@@ -49,7 +50,7 @@
       <p>Credential stuffing attacks take passwords stolen from one data breach and systematically test them across hundreds of other sites, exploiting our tendency to reuse the same password everywhere. Then there's phishing—sophisticated fake websites that look exactly like the real thing, tricking people into typing their credentials directly to attackers.</p>
       <p>Learning about these methods has made me realize that trust in digital systems is earned, not assumed—it comes from understanding how they are built to handle a never-ending stream of threats.</p>
 
-      <h2>Designing for Human Nature</h2>
+      <h2>Built for Human Nature</h2>
       <p>The most fascinating part of studying cybersecurity isn't the technical complexity — it's realizing how much it's about human psychology. Good security systems don't fight human behaviour, they are built to work with it.</p> Different access control models like Role-Based Access Control (RBAC) work because they mirror how we naturally think about permissions in the real world. Your job title determines what files you can access.</p>
       <p>Single Sign-On (SSO) systems solve a very human problem: password fatigue. Instead of remembering dozens of passwords, you authenticate once and access multiple applications. But making SSO work securely means every connected system needs to trust each other in the right way — and that takes careful planning.</p>
       <p>When my phone asks for my fingerprint, a lot is happening in the background — verifying who I am and logging the attempt — but from my side, it's just a quick touch. That's good security design: it works without getting in the way.</p>
@@ -57,7 +58,7 @@
       <h2>Reading the Patterns</h2>
       <p>Security systems are essentially pattern detectors — they establish a baseline of expected behaviour, so anything that deviates from it gets flagged immediately.</p>
       <p>Understanding attack vectors has shown me that effective security monitoring means analyzing audit logs, tracking authentication failures, and assessing risk indicators across thousands of daily interactions. When someone tries to access systems from an unusual location or attempts multiple failed logins, those signs are worth paying attention to.</p>
-      <p>Choosing cybersecurity means staying alert so that everyone's digital life and data stays protected. I'm learning to read what systems are telling us — spotting threats early, weighing risk factors, and making sure security holds across every login and every access attempt. I think it is very rewarding.</p>
+      <p>Choosing cybersecurity means staying alert so that everyone's digital life and data stays protected. I'm learning to read what systems are saying — spotting threats early, weighing risk factors, and making sure security holds across every login and every access attempt. I think it is very rewarding.</p>
     </section>
 
     <section class="post-share">
