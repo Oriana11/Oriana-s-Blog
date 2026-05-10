@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 8 at ReDI: Understanding Windows and Active Directory – Cyberstack Blog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code:wght@400;500;700&family=Montserrat:wght@700&display=optional" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/post.css">
+</head>
+<body>
+    <header class="site-nav">
+        <a class="nav-brand" href="../index.html">Cyberstack Blog</a>
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="../index.html#featured">Posts</a>
+            <a href="../about.html">About</a>
+        </nav>
+        <button class="menu-toggle" aria-label="Open menu">☰</button>
+    </header>
+
+    <article class="post-article">
+        <section class="post-header">
+            <h1>Day 8 at ReDI: Understanding Windows and Active Directory</h1>
+            <p class="post-meta">By Oriana • May 10 2026 • 3 min read •
+                <a href="../index.html?filter=security">#security</a>
+                <a href="../index.html?filter=operating-systems">#windows</a>
+                <a href="../index.html?filter=redi">#ReDI</a>
+            </p>
+        </section>
+
+        <section class="post-hero">
+            <img src="../../images/windows.png" alt="Windows and Active Directory fundamentals">
+        </section>
+
+        <section class="post-content">
+            <p>In this session, I learned that Windows security is much more than just using a familiar operating system. Behind the desktop we use every day, there is a whole structure of users, permissions, system folders, security settings, and network management that shapes how safe a computer really is.</p>
+
+            <h2>Windows Is Not Just One Thing</h2>
+            <p>One of the first things that became clearer to me is that Windows comes in different forms depending on the job it needs to do. There is the version most people use at home, there is Windows Server for business infrastructure, and there are lighter versions for devices like kiosks and embedded systems.</p>
+            <p>That helped me see Windows less as a single product and more as a family of systems built for different environments.</p>
+
+            <h2>Why the File System Matters</h2>
+            <p>I also learned that the file system is not just a technical detail. It decides how files are stored, found, and protected. In Windows, NTFS is important because it supports permissions, encryption, compression, journaling, and other features that help with both security and reliability.</p>
+            <p>Even basic system folders started to make more sense. Program Files holds installed applications, Users contains personal profiles, and the Windows folder holds core operating system files. Understanding that structure makes the system feel less mysterious.</p>
+
+            <h2>Users, Admins, and Permissions</h2>
+            <p>A big takeaway from this session is the difference between a standard user and an administrator. A standard user can do daily work, but an admin account can change system settings, install software, and manage other accounts.</p>
+            <p>That difference matters because too much privilege creates risk. The permissions model in Windows exists to control who can read, write, modify, or fully control files and folders. A simple mistake in permissions can expose sensitive data or allow unwanted changes.</p>
+
+            <h2>The Management Models Finally Clicked</h2>
+            <p>The comparison between standalone systems, workgroups, and domains made this topic much easier to follow. A standalone computer manages itself. A workgroup is still local and separate on each machine. A domain is centralized and much more structured.</p>
+            <p>That was the moment Active Directory started to make sense to me. It is not just a name you hear in IT. It is the system that helps organizations manage users, devices, authentication, and policies in one place instead of dealing with every machine individually.</p>
+
+            <h2>Why Active Directory Is So Important</h2>
+            <p>I learned that Active Directory makes life easier for organizations because it centralizes logins, policies, and access control. Instead of creating separate accounts everywhere, everything can be managed from domain controllers.</p>
+            <p>It also improves consistency. When passwords, permissions, and security rules are handled centrally, it becomes easier to enforce better security across the whole environment.</p>
+
+            <h2>Security Examples Made It Real</h2>
+            <p>The scenarios in this session were useful because they showed how everyday decisions affect security. A lost laptop with no password, an over-shared payroll folder, or a phishing attack on a domain-joined machine all show different levels of risk.</p>
+            <p>What stood out to me is that stronger management and better policy control can reduce damage. Group Policy, backups, encryption, and proper permissions all play a role in keeping incidents from becoming disasters.</p>
+
+            <h2>Windows Security Is Broader Than Antivirus</h2>
+            <p>I liked that we looked at Windows Security as a full set of protections, not just antivirus. Virus and threat protection, account protection, firewall rules, app and browser control, device security, and system health all work together.</p>
+            <p>It was a good reminder that endpoint security is layered. Real protection comes from combining settings, visibility, safe habits, and the right controls for the business context.</p>
+
+            <h2>What I’m Taking Away</h2>
+            <p>The main lesson I’m keeping from this session is that Windows administration and security are closely connected. If you understand users, permissions, local versus centralized management, and the role of Active Directory, you already understand a big part of how organizations stay secure.</p>
+            <p>This session made Windows and AD feel more practical and less intimidating. Instead of seeing them as purely administrative topics, I now see them as part of the everyday foundation of cybersecurity.</p>
+        </section>
+
+        <section class="post-share">
+            <span>Share:</span>
+            <a href="#">LinkedIn</a>
+        </section>
+
+        <section class="related-posts">
+            <h2>Related Posts</h2>
+            <div class="related-carousel">
+                <article class="card">
+                    <img class="card-img" src="../../images/commandline.png" alt="Operating systems and endpoint security">
+                    <p><a href="post-8-reflections-on-os-cli-endpoint-security.html">Day 6: OS, CLI &amp; Endpoint Security</a></p>
+                </article>
+                <article class="card">
+                    <img class="card-img" src="../../images/securityaccess.png" alt="Identity and access management concepts">
+                    <p><a href="post-7-identity-and-access-management.html">Day 5: How We Log In</a></p>
+                </article>
+                <article class="card">
+                    <img class="card-img" src="../../images/security.png" alt="Cloud security concepts">
+                    <p><a href="post-9-cloud-security-fundamentals.html">Day 7: Cloud Security Fundamentals</a></p>
+                </article>
+            </div>
+        </section>
+
+        <section class="comments">
+            <h2>Comments</h2>
+            <script src="https://giscus.app/client.js"
+                data-repo="Oriana11/Oriana-s-Blog"
+                data-repo-id="R_kgDORsEo3Q"
+                data-category="Announcements"
+                data-category-id="DIC_kwDORsEo3c4C42jN"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="top"
+                data-theme="dark"
+                data-lang="en"
+                crossorigin="anonymous"
+                async>
+            </script>
+        </section>
+    </article>
+</body>
+</html>
