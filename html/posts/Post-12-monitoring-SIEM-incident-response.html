@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 10 at ReDI: Security Monitoring, SIEM & Incident Response – Cyberstack Blog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code:wght@400;500;700&family=Montserrat:wght@700&display=optional" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/post.css">
+</head>
+<body>
+    <header class="site-nav">
+        <a class="nav-brand" href="../index.html">Cyberstack Blog</a>
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="../index.html#featured">Posts</a>
+            <a href="../about.html">About</a>
+        </nav>
+        <button class="menu-toggle" aria-label="Open menu">☰</button>
+    </header>
+
+    <article class="post-article">
+        <section class="post-header">
+            <h1>Day 10 at ReDI: Security Monitoring, SIEM & Incident Response</h1>
+            <p class="post-meta">By Oriana • June 11 2026 • 2 min read •
+                <a href="../index.html?filter=security">#security</a>
+                <a href="../index.html?filter=redi">#ReDI</a>
+            </p>
+        </section>
+
+        <section class="post-hero">
+            <img src="../../images/siem.png" alt="Security monitoring and incident response journey">
+        </section>
+
+        <section class="post-content">
+            <p>Today was session 10 — and it felt like everything finally clicked into place.</p>
+
+            <p>We’ve come a long way since day one. From GRC and networking, through cryptography, IAM, and endpoint security, to cloud fundamentals, Windows AD, and last week’s deep dive into vulnerabilities and threat intelligence. Now we’re at the core: seeing threats in action and knowing exactly what to do.</p>
+
+            <h2>Knowing What You Protect</h2>
+            <p>First, we went back to basics. You can’t protect what you don’t know. Asset discovery isn’t just a checklist. It’s about finding every device, app, and data store — even the “shadow IT” tools people use without telling IT. Those are the hidden risks that often go unnoticed.</p>
+
+            <h2>Understanding Risk & Vulnerabilities</h2>
+            <p>We talked about vulnerabilities again, but this time with fresh eyes. A weakness isn’t a problem until someone exploits it. Risk is about how likely that is, and how much it would hurt. CVSS scores help, but context matters more — a high score doesn’t always mean it’s your biggest risk right now.</p>
+            <p>We also learned the difference: <strong>Remediation</strong> means fixing the problem completely, while <strong>Mitigation</strong> means reducing the risk until you can fix it. Patching isn’t always immediate — sometimes you need to protect first. And you always <strong>verify and improve continuously</strong> — security is a loop, not a one‑time task. We also saw how threat intelligence helps us prioritize what matters most.</p>
+
+            <h2>Logs: The Eyes of Security</h2>
+            <p>Then came the big questions. How do we catch things we don’t know to look for? How do we spot attacks while they’re happening? The answer: logs and monitoring.</p>
+            <p>Logs are everywhere — time‑stamped records of every activity: authentication attempts, system changes, firewall blocks, web traffic, antivirus detections. Every login, every block, every error — all recorded with a timestamp. We learned to read them: a failed login from an odd IP? That’s a clue. Repeated attempts? That’s a pattern. I loved seeing real examples and understanding exactly what each field means.</p>
+
+            <p>We got hands‑on too. On Windows, we used <strong>Event Viewer</strong> and <strong>PowerShell</strong> to pull login history and filter event IDs like 4624 (success) and 4625 (failure). On Linux, we dove into <code>auth.log</code>, used <code>grep</code> to find failed attempts, checked sudo usage, and watched logs live with <code>tail</code> or <code>journalctl</code>. It felt powerful to turn raw text into real insight.</p>
+
+            <h2>SIEM: Turning Data Into Awareness</h2>
+            <p>Next up: <strong>SIEM — Security Information and Event Management</strong>. This is where logs turn into awareness.</p>
+            <p>We clarified the key difference:</p>
+            <ul>
+                <li><strong>Event</strong> = any recorded activity (usually no action needed)</li>
+                <li><strong>Alert</strong> = a warning when something matches a rule or pattern (needs investigation)</li>
+                <li><strong>Incident</strong> = confirmed malicious activity (full response required)</li>
+            </ul>
+            <p>We also learned about detection accuracy: <strong>True Positive</strong> (real threat found), <strong>False Positive</strong> (normal activity flagged), <strong>True Negative</strong> (safe activity ignored), <strong>False Negative</strong> (attack missed). The goal? Only alert on what matters — and never miss the real danger.</p>
+
+            <h2>Incident Response: What To Do When It Happens</h2>
+            <p>Then we moved to response. What happens when the alarm rings? We walked through the full cycle: <strong>Prepare → Detect → Contain → Eradicate → Recover → Learn</strong>. Every step has a purpose. Every role has a job — from SOC analyst monitoring alerts, IR specialists leading investigations, IT isolating systems, Legal checking compliance, Management approving decisions, to Comms handling communication.</p>
+            <p>We practiced with real scenarios: phishing clicks, malware on USBs, logins from unexpected countries, post‑incident debriefs, and full system recovery. It made the theory feel real.</p>
+
+            <h2>What I’m Taking Away</h2>
+            <p>What stuck with me most? Security isn’t just about building walls. It’s about watching, understanding, and acting fast. It’s about people, process, and tools working together. It’s not perfect — but it’s always improving.</p>
+
+            <p>Next week is the capstone. Time to put all this learning into something real. I feel ready.</p>
+        </section>
+
+        <section class="post-share">
+            <span>Share:</span>
+            <a href="#">LinkedIn</a>
+        </section>
+
+        <section class="related-posts">
+            <h2>Related Posts</h2>
+            <div class="related-carousel">
+                <article class="card" data-tags="security journey redi">
+                    <img class="card-img" src="../../images/pentester.PNG" alt="Pentester at work">
+                    <p><a href="post-1-my-cybersecurity-journey.html">My Cybersecurity Journey: ReDI, TryHackMe &amp; Finding My Path</a></p>
+                </article>
+                <article class="card" data-tags="security threat-intelligence vulnerability-management tutorial redi">
+                    <img class="card-img" src="../../images/threatandsecurity.png" alt="Vulnerability management and threat intelligence concepts">
+                    <p><a href="post-11-vulnerability-management-and-threat-intelligence.html">Day 9 at ReDI: Vulnerability Management &amp; Threat Intelligence</a></p>
+                </article>
+                <article class="card" data-tags="windows active-directory security redi">
+                    <img class="card-img" src="../../images/windows.png" alt="Windows and Active Directory fundamentals">
+                    <p><a href="post-10-windows-and-ad-fundamentals.html">Day 8 at ReDI: Understanding Windows and Active Directory</a></p>
+                </article>
+                <article class="card" data-tags="cloud security journey redi">
+                    <img class="card-img" src="../../images/cloud.png" alt="Cloud security concepts">
+                    <p><a href="post-9-cloud-security-fundamentals.html">Day 7 at ReDI: Cloud Security Fundamentals Made Simple</a></p>
+                </article>
+            </div>
+        </section>
+
+        <section class="comments">
+            <h2>Comments</h2>
+            <script src="https://giscus.app/client.js"
+                data-repo="Oriana11/Oriana-s-Blog"
+                data-repo-id="R_kgDORsEo3Q"
+                data-category="Announcements"
+                data-category-id="DIC_kwDORsEo3c4C42jN"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="top"
+                data-theme="dark"
+                data-lang="en"
+                crossorigin="anonymous"
+                async>
+            </script>
+        </section>
+    </article>
+</body>
+</html>
