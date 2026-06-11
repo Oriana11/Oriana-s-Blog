@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capstone Project: Malware Analysis & Incident Response – Cyberstack Blog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code:wght@400;500;700&family=Montserrat:wght@700&display=optional" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/post.css">
+    <style>
+        /* ============================================================
+           POST — single blog post page specific styles
+           ============================================================ */
+
+        /* --- Giscus comments widget --- */
+        .comments {
+          margin-bottom: 2rem;
+        }
+        .comments h2 {
+          margin-bottom: 1.25rem;
+        }
+        .giscus, .giscus-frame {
+          width: 100%;
+          border: none;
+          color-scheme: dark;
+        }
+
+        /* --- Article wrapper --- */
+        .post-article {
+          max-width: 870px;
+          margin: 0 auto;
+          width: 100%;
+          padding: 3rem 1.5rem 2rem;
+        }
+
+        /* --- Post header --- */
+        .post-header {
+          margin-bottom: 1.8rem;
+        }
+        .post-header h1 {
+          font-family: var(--font-heading);
+          font-size: clamp(2rem, 5vw, 3rem);
+          margin-bottom: 0.6rem;
+        }
+        .post-meta {
+          color: var(--color-muted);
+          font-size: 0.95rem;
+        }
+        .post-meta a {
+          color: var(--color-primary);
+          margin-left: 0.4rem;
+          text-decoration: none;
+        }
+
+        /* --- Hero image --- */
+        .post-hero img {
+          width: 100%;
+          border-radius: 12px;
+          margin: 0.75rem 0 2rem;
+          display: block;
+        }
+
+        /* --- Post content --- */
+        .post-content {
+          padding: 0;
+          line-height: 1.8;
+        }
+        .post-content p {
+          margin-bottom: 1.2rem;
+        }
+        .post-content h2 {
+          margin-top: 2rem;
+        }
+        .post-content code {
+          font-family: var(--font-code);
+          background: rgba(255, 255, 255, 0.08);
+          padding: 0.15rem 0.4rem;
+          border-radius: 4px;
+          font-size: 0.92em;
+        }
+        .post-content pre {
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          padding: 1.2rem;
+          border-radius: 10px;
+          overflow-x: auto;
+          margin: 1.2rem 0;
+        }
+        .post-content pre code {
+          background: none;
+          padding: 0;
+          font-size: 0.9rem;
+        }
+
+        /* --- Share bar --- */
+        .post-share {
+          margin: 2rem 0;
+          padding-top: 1.2rem;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          flex-wrap: wrap;
+          font-size: 0.95rem;
+        }
+        .post-share a {
+          color: var(--color-primary);
+          text-decoration: none;
+        }
+
+        /* ============================================================
+           RELATED POSTS
+        ============================================================ */
+        .related-posts {
+          margin-bottom: 2rem;
+        }
+        .related-posts h2 {
+          font-size: 1.5rem;
+          font-weight: 700;
+          margin-bottom: 1rem;
+          color: #ffffff;
+        }
+
+        .related-carousel {
+          display: flex;
+          gap: 1.25rem;
+          overflow-x: auto;
+          padding: 0.5rem 0 1rem;
+          scrollbar-width: thin;
+          scrollbar-color: #888 #1a1a1f;
+        }
+        .related-carousel::-webkit-scrollbar {
+          height: 6px;
+        }
+        .related-carousel::-webkit-scrollbar-track {
+          background: #1a1a1f;
+          border-radius: 3px;
+        }
+        .related-carousel::-webkit-scrollbar-thumb {
+          background: #888;
+          border-radius: 3px;
+        }
+
+        .related-carousel .post-card {
+          width: 290px;
+          min-width: 290px;
+          background: #1a1a1f;
+          border: 2px solid transparent;
+          border-radius: 10px;
+          overflow: hidden;
+          flex-shrink: 0;
+          position: relative;
+          cursor: pointer;
+          transition: border-color 0.25s ease;
+        }
+        .related-carousel .post-card:hover,
+        .related-carousel .post-card.active {
+          border-color: #555;
+        }
+
+        .related-carousel .post-img {
+          width: 100%;
+          height: 170px;
+          object-fit: cover;
+          display: block;
+        }
+
+        .related-carousel .post-card h3 {
+          padding: 0.9rem 1rem;
+          margin: 0;
+          font-size: 0.95rem;
+          font-weight: 500;
+          color: #ffffff;
+          line-height: 1.4;
+        }
+
+        .related-carousel .post-card a {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          text-decoration: none;
+        }
+
+        /* --- Comments --- */
+        .comments {
+          margin-bottom: 2rem;
+        }
+        .comments h2 {
+          margin-bottom: 1rem;
+        }
+        .comments form {
+          display: grid;
+          gap: 1rem;
+        }
+        .comments label {
+          font-size: 0.95rem;
+          color: var(--color-muted);
+          display: flex;
+          flex-direction: column;
+          gap: 0.3rem;
+        }
+        .comments input, .comments textarea {
+          width: 100%;
+          padding: 0.6rem 0.75rem;
+          border-radius: 8px;
+          border: 1px solid rgba(255,255,255,0.15);
+          background: rgba(255,255,255,0.05);
+          color: #e8e8e8;
+          font-family: var(--font-body);
+          font-size: 1rem;
+        }
+        .comments input:focus, .comments textarea:focus {
+          outline: 2px solid var(--color-primary);
+          border-color: transparent;
+        }
+        .comments button {
+          justify-self: start;
+        }
+
+        /* --- Capstone Image Carousel --- */
+        .capstone-carousel {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding: 0.5rem 0 1.5rem;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05);
+            margin: 1.5rem 0 2rem;
+        }
+        .capstone-carousel::-webkit-scrollbar { height: 6px; }
+        .capstone-carousel::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 4px; }
+        .capstone-carousel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+        .capstone-carousel::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+        .capstone-carousel img {
+            flex: 0 0 auto;
+            width: 700px;
+            max-width: 85vw;
+            height: auto;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            transition: border 0.3s ease, transform 0.3s ease;
+            cursor: zoom-in;
+        }
+        .capstone-carousel img:hover {
+            border-color: rgba(255,255,255,0.2);
+            transform: scale(1.02);
+        }
+
+        /* --- Lightbox --- */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(6px);
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox-img {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255,255,255,0.1);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .lightbox.active .lightbox-img { transform: scale(1); }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            cursor: pointer;
+            border-radius: 50%;
+            backdrop-filter: blur(4px);
+            transition: background 0.2s ease;
+        }
+        .lightbox-nav:hover { background: rgba(255,255,255,0.2); }
+        .prev { left: 2rem; }
+        .next { right: 2rem; }
+
+        .close-btn {
+            position: absolute;
+            top: 2rem; right: 2rem;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        .close-btn:hover { opacity: 1; }
+    </style>
+</head>
+<body>
+    <header class="site-nav">
+        <a class="nav-brand" href="../index.html">Cyberstack Blog</a>
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="../index.html#featured">Posts</a>
+            <a href="../about.html">About</a>
+        </nav>
+        <button class="menu-toggle" aria-label="Open menu">☰</button>
+    </header>
+
+    <article class="post-article">
+        <section class="post-header">
+            <h1>Capstone Project: Malware Analysis, Threat Detection & GRC Framework</h1>
+            <p class="post-meta">By Oriana • June 11 2026 • 3 min read •
+                <a href="../index.html?filter=security">#security</a>
+                <a href="../index.html?filter=capstone">#capstone</a>
+                <a href="../index.html?filter=learning">#learning</a>
+            </p>
+        </section>
+
+        <!-- Capstone Images Carousel -->
+        <div class="capstone-carousel" id="carousel">
+            <img src="../../images/1.png" alt="Wireshark Technical Analysis: Threat Detection, GRC framework, Reflections and Solutions" onclick="openLightbox(0)">
+            <img src="../../images/2.png" alt="Introduction and Problem Statement" onclick="openLightbox(1)">
+            <img src="../../images/3.png" alt="Malware attack: Data Exfiltration" onclick="openLightbox(2)">
+            <img src="../../images/4.png" alt="Malware: What It Is & How It Works" onclick="openLightbox(3)">
+            <img src="../../images/5.png" alt="Oracle Virtual Box" onclick="openLightbox(4)">
+            <img src="../../images/6.png" alt="Statistics Conversation" onclick="openLightbox(5)">
+            <img src="../../images/7.png" alt="Statistics Endpoints" onclick="openLightbox(6)">
+            <img src="../../images/8.png" alt="Wireshark I/O Graphs Data Exfiltration" onclick="openLightbox(7)">
+            <img src="../../images/9.png" alt="Wireshark : ftp filter" onclick="openLightbox(8)">
+            <img src="../../images/10.png" alt="Filter→ Exfiltration Proof" onclick="openLightbox(9)">
+            <img src="../../images/11.png" alt="Filter→ Exfiltration Proof (FTP Data)" onclick="openLightbox(10)">
+            <img src="../../images/12.png" alt="Login Evidence" onclick="openLightbox(11)">
+            <img src="../../images/13.png" alt="Missing Defenses: Endpoint Security & Data Loss Prevention" onclick="openLightbox(12)">
+            <img src="../../images/14.png" alt="CIA Triad: Confidentiality Broken" onclick="openLightbox(13)">
+            <img src="../../images/15.png" alt="GRC: Governance, Risk, and Compliance" onclick="openLightbox(14)">
+            <img src="../../images/16.png" alt="Final Reflections" onclick="openLightbox(15)">
+            <img src="../../images/17.png" alt="Sources" onclick="openLightbox(16)">
+        </div>
+
+        <!-- Lightbox -->
+        <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+            <button class="close-btn" onclick="closeLightbox()">&times;</button>
+            <button class="lightbox-nav prev" onclick="showPrevSlide(event)">&#8249;</button>
+            <img id="lightbox-img" class="lightbox-img" alt="Zoomed view">
+            <button class="lightbox-nav next" onclick="showNextSlide(event)">&#8250;</button>
+        </div>
+
+        <section class="post-content">
+            <p>We finally made it — the capstone project is done! 🎉 This was the biggest, most exciting part of the whole ReDI journey, and honestly? It was everything I hoped for and more.</p>
+
+            <h2>Working as a Team — We Created a Story Together</h2>
+            <p>We worked in groups, and the idea was brilliant: we created one fictional company scenario, and each of us took on a different challenge within it. By putting all our work together, we didn’t just present separate tasks — we told the full story of what happened, step by step. It was amazing to see how our individual parts connected into one complete picture.</p>
+
+            <p>I took on the role of Project Manager, supporting and coordinating giving my contribution, so we could all do our best and succeed together. I loved the energy of the team. It showed me how much difference clear communication and collaboration can make.</p>
+
+            <p>We brainstormed, researched, helped each other out, and turned individual work into something complete and powerful. This experience showed me that cybersecurity is truly a team effort — and I loved every second of it.</p>
+
+            <h2>My Focus: Malware Analysis & Incident Response</h2>
+            <p>For my part of the story, I focused on a malware attack scenario, specifically looking at how data was stolen. I worked with real, infected data samples — taken from trusted sources — to understand exactly what was happening.</p>
+
+            <p>My part of the story started with something very common: an employee downloaded a program from the internet, not realizing it was dangerous. That simple action let a type of malware called Snake Keylogger into the system. Once installed, it worked quietly in the background, capturing everything typed — passwords, messages, confidential details — and sending all that information out to someone outside the company.</p>
+
+            <p>To understand exactly what happened, I used real traffic data that had been captured during a similar infection, but I ran everything in a safe, isolated environment so there was no risk of harm. I traced the communication and quickly saw that something was wrong: there was a lot of data flowing from one internal computer to an unknown external address. It was clear information was being taken out of the network without anyone knowing.</p>
+
+            <p>What stood out most to me was how easy it was for this to happen. The data being sent wasn’t protected or encrypted at all — anyone watching could have read it. And because there were no tools in place to stop sensitive information from leaving, or to spot unusual activity early, the attack went unnoticed until it was too late.</p>
+
+            <p>This wasn’t just a technical problem — it was also about rules and awareness. The team of our fictitious company didn’t have clear guidelines about what software could be installed, and staff hadn’t been trained to spot risks. It showed me that security isn’t only about tools; it’s about people and processes too. When those are missing, even a small mistake can lead to a serious breach.</p>
+
+            <p>From a security point of view, this meant the confidentiality of data was broken — the most important rule in protecting information. It also showed that the company wasn’t following basic standards for keeping personal data safe, which is required by regulations like GDPR.</p>
+
+            <h2>Final Reflection & What I Learned</h2>
+            <p>Doing this investigation made me realize how much security relies on being prepared. Threats like this are common, but they are also preventable. I learned that the best protection comes from a mix of things: teaching people what to look out for, having systems that block or catch bad software early, watching for unusual movement of data, and making sure that even if something does get stolen, it’s scrambled and useless to anyone else.</p>
+
+            <p>Some of the key lessons I’ll take with me are:</p>
+            <ul>
+                <li>People are often the first line of defense — training and clear rules make a huge difference.</li>
+                <li>You need tools that can spot and stop threats before they cause harm.</li>
+                <li>Always watch your data — if sensitive information starts moving outside, you want to know immediately.</li>
+                <li>Limit access so that even if one part is compromised, the whole system isn’t at risk.</li>
+                <li>Encrypt everything important — it’s your safety net if something goes wrong.</li>
+            </ul>
+
+            <p>This project brought together everything I’ve learned from day one: how systems work, how we keep them safe, how we track what’s happening, and how we manage risk. I realized that security isn’t just about tools — it’s about knowing how to use them, understanding what the data tells you, and connecting the dots between people, processes, and technology.</p>
+
+            <p>Being part of building this story together — and contributing to how we organized and presented it — gave me a bigger picture of how security teams work. I loved both the technical side and the teamwork part equally.</p>
+
+            <h2>Ready for What’s Next</h2>
+            <p>Looking back at these weeks, from the first lesson to finishing this project, I can’t believe how far I’ve come. Working in a team to build and tell a full security story was incredible; diving deep into my own investigation gave me confidence I didn’t have before. Even the part I played in coordinating our work taught me so much — and I’m proud of every part of it.</p>
+
+            <p>Now I have a solid foundation, real hands‑on experience, and a project I’m truly proud of. I feel ready — ready to keep learning, ready to work, and ready to protect.</p>
+
+            <p>Let’s see where this goes next! 🚀</p>
+        </section>
+
+        <section class="post-share">
+            <span>Share:</span>
+            <a href="#">LinkedIn</a>
+        </section>
+
+        <section class="related-posts">
+            <h2>Related Posts</h2>
+            <div class="related-carousel">
+                <article class="card" data-tags="security journey redi">
+                    <img class="card-img" src="../../images/pentester.PNG" alt="Pentester at work">
+                    <p><a href="post-1-my-cybersecurity-journey.html">My Cybersecurity Journey: ReDI, TryHackMe &amp; Finding My Path</a></p>
+                </article>
+                <article class="card" data-tags="security threat-intelligence vulnerability-management tutorial redi">
+                    <img class="card-img" src="../../images/threatandsecurity.png" alt="Vulnerability management and threat intelligence concepts">
+                    <p><a href="post-11-vulnerability-management-and-threat-intelligence.html">Day 9 at ReDI: Vulnerability Management &amp; Threat Intelligence</a></p>
+                </article>
+                <article class="card" data-tags="windows active-directory security redi">
+                    <img class="card-img" src="../../images/windows.png" alt="Windows and Active Directory fundamentals">
+                    <p><a href="post-10-windows-and-ad-fundamentals.html">Day 8 at ReDI: Understanding Windows and Active Directory</a></p>
+                </article>
+                <article class="card" data-tags="cloud security journey redi">
+                    <img class="card-img" src="../../images/cloud.png" alt="Cloud security concepts">
+                    <p><a href="post-9-cloud-security-fundamentals.html">Day 7 at ReDI: Cloud Security Fundamentals Made Simple</a></p>
+                </article>
+            </div>
+        </section>
+
+        <section class="comments">
+            <h2>Comments</h2>
+            <script src="https://giscus.app/client.js"
+                data-repo="Oriana11/Oriana-s-Blog"
+                data-repo-id="R_kgDORsEo3Q"
+                data-category="Announcements"
+                data-category-id="DIC_kwDORsEo3c4C42jN"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="top"
+                data-theme="dark"
+                data-lang="en"
+                crossorigin="anonymous"
+                async>
+            </script>
+        </section>
+    </article>
+
+    <!-- Lightbox Script -->
+    <script>
+        let currentSlide = 0;
+        const images = [
+            "../../images/1.png", "../../images/2.png", "../../images/3.png", "../../images/4.png", "../../images/5.png",
+            "../../images/6.png", "../../images/7.png", "../../images/8.png", "../../images/9.png", "../../images/10.png",
+            "../../images/11.png", "../../images/12.png", "../../images/13.png", "../../images/14.png", "../../images/15.png",
+            "../../images/16.png", "../../images/17.png"
+        ];
+
+        function openLightbox(index) {
+            currentSlide = index;
+            document.getElementById('lightbox-img').src = images[currentSlide];
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function showPrevSlide(event) {
+            event.stopPropagation();
+            currentSlide = (currentSlide - 1 + images.length) % images.length;
+            document.getElementById('lightbox-img').src = images[currentSlide];
+        }
+
+        function showNextSlide(event) {
+            event.stopPropagation();
+            currentSlide = (currentSlide + 1) % images.length;
+            document.getElementById('lightbox-img').src = images[currentSlide];
+        }
+    </script>
+</body>
+</html>
