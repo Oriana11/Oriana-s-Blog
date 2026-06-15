@@ -235,7 +235,7 @@
         .capstone-carousel::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
         .capstone-carousel img {
             flex: 0 0 auto;
-            width: 700px;
+            width: 520px; /* Reduced from 700px to make it smaller */
             max-width: 85vw;
             height: auto;
             border-radius: 8px;
@@ -308,6 +308,15 @@
             transition: opacity 0.2s ease;
         }
         .close-btn:hover { opacity: 1; }
+
+        /* --- Resized single capstone cover image --- */
+        .post-content .post-img {
+            max-width: 70%; /* Reduced size while keeping proportions */
+            height: auto;
+            display: block;
+            margin: 1rem auto;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
@@ -359,29 +368,31 @@
             <button class="lightbox-nav next" onclick="showNextSlide(event)">&#8250;</button>
         </div>
 
-        <section class="post-content">
-            <p>We finally made it — the capstone project is done! 🎉 This was the biggest, most exciting part of the whole ReDI journey, and honestly? It was everything I hoped for and more.</p>
+        <div class="post-content">
+            <p>I finally made it — the capstone project is done! 🎉 This was the biggest, most exciting part of the whole ReDI journey, and honestly? It was everything I hoped for and more.</p>
 
             <h2>Working as a Team — We Created a Story Together</h2>
-            <p>We worked in groups, and the idea was brilliant: we created one fictional company scenario, and each of us took on a different challenge within it. By putting all our work together, we didn’t just present separate tasks — we told the full story of what happened, step by step. It was amazing to see how our individual parts connected into one complete picture.</p>
+            <p>I worked in groups, and the idea was brilliant: we created one fictional company scenario, and each of us took on a different challenge within it. By putting all our work together, we didn’t just present separate tasks — we told the full story of what happened, step by step. It was amazing to see how our individual parts connected into one complete picture.</p>
 
-            <p>I took on the role of Project Manager, supporting and coordinating giving my contribution, so we could all do our best and succeed together. I loved the energy of the team. It showed me how much difference clear communication and collaboration can make.</p>
+            <p>I took on the role of Project Manager, supporting and coordinating giving my contribution, so we could all do our best and succeed together. I loved the energy of the team.</p>
 
             <p>We brainstormed, researched, helped each other out, and turned individual work into something complete and powerful. This experience showed me that cybersecurity is truly a team effort — and I loved every second of it.</p>
 
-            <h2>My Focus: Malware Analysis & Incident Response</h2>
-            <p>For my part of the story, I focused on a malware attack scenario, specifically looking at how data was stolen. I worked with real, infected data samples — taken from trusted sources — to understand exactly what was happening.</p>
+         <h2>My Focus: Malware Analysis & Incident Response</h2>
+<p>For my part of the story, I focused on a <strong>fictitious malware attack scenario</strong>, specifically investigating how sensitive data gets stolen. To understand exactly how such attacks work in reality, I based my analysis on <strong>real network traffic samples</strong> — downloaded from Malware-Traffic-Analysis.net — which came from actual infections observed in the wild.</p>
 
-            <p>My part of the story started with something very common: an employee downloaded a program from the internet, not realizing it was dangerous. That simple action let a type of malware called Snake Keylogger into the system. Once installed, it worked quietly in the background, capturing everything typed — passwords, messages, confidential details — and sending all that information out to someone outside the company.</p>
+<p>The scenario follows a very common real‑world pattern: an employee downloaded a program from the internet, unaware it was harmful. That single action introduced <strong>Snake Keylogger</strong> into the system. Once installed, the malware operated silently in the background, capturing every keystroke — including passwords, messages, and confidential details — and sending all of it to an external attacker.</p>
 
-            <p>To understand exactly what happened, I used real traffic data that had been captured during a similar infection, but I ran everything in a safe, isolated environment so there was no risk of harm. I traced the communication and quickly saw that something was wrong: there was a lot of data flowing from one internal computer to an unknown external address. It was clear information was being taken out of the network without anyone knowing.</p>
+<p>To study this safely and without risk, I ran all my investigations inside an <strong>isolated virtual machine</strong>. This closed‑off environment let me examine the full traffic capture in detail, while still tracing every step of the communication. I quickly spotted the red flag: large amounts of data flowing from an internal computer to an unknown external IP address — clear proof that information was being exfiltrated from the network without anyone noticing.</p>
 
-            <p>What stood out most to me was how easy it was for this to happen. The data being sent wasn’t protected or encrypted at all — anyone watching could have read it. And because there were no tools in place to stop sensitive information from leaving, or to spot unusual activity early, the attack went unnoticed until it was too late.</p>
+<p>What stood out most to me was how easy it was for this to happen. The data being sent wasn’t protected or encrypted at all — anyone monitoring the network could have read it. And because there were no tools in place to block sensitive data from leaving, or to alert on unusual activity early, the attack went unnoticed until it was too late.</p>
 
-            <p>This wasn’t just a technical problem — it was also about rules and awareness. The team of our fictitious company didn’t have clear guidelines about what software could be installed, and staff hadn’t been trained to spot risks. It showed me that security isn’t only about tools; it’s about people and processes too. When those are missing, even a small mistake can lead to a serious breach.</p>
+<p>This wasn’t just a technical problem — it was also about rules and awareness. In our fictitious company, there were no clear guidelines about what software could be installed, and staff had not been trained to spot risks. It showed me that security isn’t only about tools; it’s equally about people and processes. When those are missing, even a small mistake can lead to a serious breach.</p>
 
-            <p>From a security point of view, this meant the confidentiality of data was broken — the most important rule in protecting information. It also showed that the company wasn’t following basic standards for keeping personal data safe, which is required by regulations like GDPR.</p>
+<p>From a security perspective, this meant the <strong>confidentiality of data</strong> was broken — the core principle of information protection. It also demonstrated that the company was not following basic standards for safeguarding personal data, as required by regulations like GDPR.</p>
 
+            <img class="post-img" src="../../images/capstone-cover.png" alt="Capstone Project: Malware Analysis, Threat Detection & GRC">
+            
             <h2>Final Reflection & What I Learned</h2>
             <p>Doing this investigation made me realize how much security relies on being prepared. Threats like this are common, but they are also preventable. I learned that the best protection comes from a mix of things: teaching people what to look out for, having systems that block or catch bad software early, watching for unusual movement of data, and making sure that even if something does get stolen, it’s scrambled and useless to anyone else.</p>
 
@@ -399,16 +410,16 @@
             <p>Being part of building this story together — and contributing to how we organized and presented it — gave me a bigger picture of how security teams work. I loved both the technical side and the teamwork part equally.</p>
 
             <h2>Ready for What’s Next</h2>
-            <p>Looking back at these weeks, from the first lesson to finishing this project, I can’t believe how far I’ve come. Working in a team to build and tell a full security story was incredible; diving deep into my own investigation gave me confidence I didn’t have before. Even the part I played in coordinating our work taught me so much — and I’m proud of every part of it.</p>
+            <p>Looking back at these weeks, from the first lesson to finishing this project, I can’t believe how far I’ve come. Working in a team to build and tell a full security story was incredible; diving deep into my own investigation gave me confidence I didn’t have before.</p>
 
             <p>Now I have a solid foundation, real hands‑on experience, and a project I’m truly proud of. I feel ready — ready to keep learning, ready to work, and ready to protect.</p>
 
             <p>Let’s see where this goes next! 🚀</p>
-        </section>
+        </div>
 
         <section class="post-share">
             <span>Share:</span>
-            <a href="#">LinkedIn</a>
+            <a href="https://www.linkedin.com/feed/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </section>
 
         <section class="related-posts">
